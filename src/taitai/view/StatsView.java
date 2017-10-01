@@ -20,6 +20,7 @@ public class StatsView {
 	private Scene _stats;
 	private String[] _to9, _to99; // needs to get input of these 
 	private ConfirmBox _cb = new ConfirmBox();
+	private ListView<String> _list9, _list99;
 
 	public Scene getStatsView(int width, int height) {
 
@@ -28,7 +29,7 @@ public class StatsView {
 		Button toMenu, clearStats;
 		VBox list9Layout, list99Layout, statisticsLayout;
 		HBox toMenuLayout, listsLayout;
-		ListView<String> list9, list99;
+		
 
 		if (TaitaiModel.readStats("stats/.level1") != null) {
 			_to9 = TaitaiModel.readStats("stats/.level1");
@@ -40,14 +41,14 @@ public class StatsView {
 		layout = new BorderPane();
 		clearStats = new Button("Clear Stats");
 		toMenu = new Button("Go Back to Menu");
-		list9 = new ListView<String>();
-		list99 = new ListView<String>();
+		_list9 = new ListView<String>();
+		_list99 = new ListView<String>();
 		to9Title = new Label("Stats for numbers 1-9");
 		to99Title = new Label("Stats for numbers 1-99");
 		statistics = new Label("Statistics");
 
-		list9 = addArrayToList(list9, _to9);
-		list99 = addArrayToList(list99, _to99);
+		_list9 = addArrayToList(_list9, _to9);
+		_list99 = addArrayToList(_list99, _to99);
 
 		toMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -65,6 +66,10 @@ public class StatsView {
 				if (confirmation) {
 					TaitaiModel.clearStats();
 					// might not need
+					
+					_list9.getItems().clear();
+					_list99.getItems().clear();
+					
 					StatsView sv = new StatsView();
 					Taitai.changeScene(sv.getStatsView(width, height));
 				}
@@ -91,8 +96,8 @@ public class StatsView {
 		statisticsLayout.getChildren().add(statistics);
 		toMenuLayout.getChildren().add(clearStats);
 		toMenuLayout.getChildren().add(toMenu);
-		list9Layout.getChildren().addAll(to9Title, list9);
-		list99Layout.getChildren().addAll(to99Title, list99);
+		list9Layout.getChildren().addAll(to9Title, _list9);
+		list99Layout.getChildren().addAll(to99Title, _list99);
 		listsLayout.getChildren().addAll(list9Layout, list99Layout);
 
 		layout.setTop(statisticsLayout);
