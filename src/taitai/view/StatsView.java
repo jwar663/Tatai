@@ -107,7 +107,8 @@ public class StatsView {
 	private ListView<String> addArrayToList(ListView<String> list, String[] stats) {
 		if (stats != null) {
 			for (int i = 0; i < stats.length; i++) {
-				list.getItems().add(i + ".) " + stats[i] + " out of 10.");
+				int num = i + 1;
+				list.getItems().add(num + ".) " + stats[i] + " out of 10.");
 			}
 		}
 		return list;
