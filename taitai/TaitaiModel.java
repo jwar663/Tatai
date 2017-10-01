@@ -247,7 +247,7 @@ public class TaitaiModel {
 	}
 	
 	//reads the word that was said from the bash command
-	private static String readRecoutFile() {
+	public static String readRecoutFile() {
 		try {
 			BufferedReader recout = new BufferedReader(new FileReader("/home/se206/Documents/HTK/MaoriNumbers/recout.mlf"));
 			int count = 0;

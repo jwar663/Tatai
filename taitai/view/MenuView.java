@@ -53,7 +53,7 @@ public class MenuView {
 		_level1.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				QuizView qv = new QuizView(true, 1, 1, 0, TaitaiModel., Taitai.startTest(1));
+				QuizView qv = new QuizView(true, 1, 1, 0, TaitaiModel.startTest(1));
 				Taitai.changeScene(qv.getQuizView(width, height));
 			}
 		});
@@ -61,7 +61,7 @@ public class MenuView {
 		_level2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				QuizView qv = new QuizView(true, 1, 2, 0, TaitaiModel., Taitai.startTest(2));
+				QuizView qv = new QuizView(true, 1, 2, 0, TaitaiModel.startTest(2));
 				Taitai.changeScene(qv.getQuizView(width, height));
 			}
 		});

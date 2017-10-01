@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.*;
 import taitai.Taitai;
+import taitai.TaitaiModel;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -77,7 +78,7 @@ public class FinishedView {
 			nextLevel.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
-					QuizView qv = new QuizView(true, 1, 2, 0, Taitai.statTest(2));
+					QuizView qv = new QuizView(true, 1, 2, 0, TaitaiModel.startTest(2));
 					Taitai.changeScene(qv.getQuizView(width, height));
 				}
 			});

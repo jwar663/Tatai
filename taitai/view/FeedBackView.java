@@ -81,7 +81,7 @@ public class FeedBackView {
 			@Override
 			public void handle(ActionEvent event) { // make questions asked appropriate
 				if (_correct && !_last) {
-					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, Taitai.startTest(_level));
+					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
 					Taitai.changeScene(qv.getQuizView(_width, _height));
 					//cont
 				} else if (_firstTry && !_correct) {
@@ -99,7 +99,7 @@ public class FeedBackView {
 						Taitai.changeScene(fv.getFinishedView(_width, _height));
 					}
 				} else {
-					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, Taitai.startTest(_level));
+					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
 					Taitai.changeScene(qv.getQuizView(_width, _height));
 				}	
 			}
