@@ -6,9 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import taitai.view.FeedBackView;
 import taitai.view.MenuView;
-import taitai.view.QuizView;
 
 /**
  * Taitai Maori number pronounciation practiser

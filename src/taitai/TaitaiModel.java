@@ -79,7 +79,7 @@ public class TaitaiModel {
 		return outputString;
 	}
 	
-<<<<<<< HEAD
+
 	//starts the testing in easy mode, using multiple other functions 
 	public static int startTest(int level) {
 		int testNumber;
@@ -88,7 +88,9 @@ public class TaitaiModel {
 		} else {
 			testNumber = randomInt(1,99);
 		}
-=======
+		return testNumber;
+	}
+
 	//starts the testing in easy mode, using multiple other functions
 	public static int startEasyMode() {
 		int score = 0;
@@ -102,7 +104,7 @@ public class TaitaiModel {
 				score++;
 			}
 			//String message = pronouncedCorrectlyMessage(wordSaid, wordRequired);
->>>>>>> Jaedyn
+
 			
 		return testNumber;
 	}

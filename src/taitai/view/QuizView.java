@@ -62,8 +62,8 @@ public class QuizView {
 		_record.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				String command = "sh /home/se206/Documents/HTK/MaoriNumbers/GoSpeech";
-				TaitaiModel.createNewProcess(command);
+				TaitaiModel.recordAudio("3");
+				TaitaiModel.writeToRecout();
 				_wordSaid = TaitaiModel.readRecoutFile(); // triedd to make this fit but im unable to execute code or anything so dont know if its correct
 				// just trying to read user input from mike
 				// wanted to have threads here but its too difficult to implement without being able to run any code
@@ -80,7 +80,7 @@ public class QuizView {
 						} else {
 							_correct = false;
 						}
-
+						//TaitaiModel.removeAudioFile();
 						FeedBackView fbv = new FeedBackView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _number);
 						Taitai.changeScene(fbv.getFeedBackView(width, height));
 					}
@@ -90,7 +90,7 @@ public class QuizView {
 				_listen.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						// TODO Auto-generated method stub
+						TaitaiModel.playAudio();
 					}
 				});
 
