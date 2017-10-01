@@ -94,12 +94,11 @@ public class FeedBackView {
 					Taitai.changeScene(qv.getQuizView(_width, _height));
 					// cont
 				} else if (_last) {
+					TaitaiModel.saveStats(_numCorrect, _level);
 					if ((_level == 1) && (_numCorrect >= 8)) {
-						TaitaiModel.saveStats(_numCorrect, _level);
 						FinishedView fv = new FinishedView(true, _numCorrect);
 						Taitai.changeScene(fv.getFinishedView(_width, _height));
 					} else {
-						TaitaiModel.saveStats(_numCorrect, _level);
 						FinishedView fv = new FinishedView(false, _numCorrect);
 						Taitai.changeScene(fv.getFinishedView(_width, _height));
 					}
