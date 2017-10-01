@@ -31,10 +31,10 @@ public class FeedBackView {
 		_numCorrect = numCorrect;
 		_number = number;
 		
-		if (questionNumber == 10) {
+		if (_questionNumber == 10) {
 			_last = true;
 		} else {
-			_last = true;
+			_last = false;
 		}
 	}
 	
