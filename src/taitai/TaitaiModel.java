@@ -49,8 +49,6 @@ public class TaitaiModel {
 		try {
 			String command = "rm -r mydir";
 			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
-			File workingDirectory = new File("/home/se206/Documents/HTK/MaoriNumbers/");
-			pb.directory(workingDirectory);
 			Process process = pb.start();
 		} catch (Exception f) {
 			f.printStackTrace();
