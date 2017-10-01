@@ -24,7 +24,9 @@ public class Taitai extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+		
 		TaitaiModel.assignMaoriNumbers();
+
 		try {
 			String command;
 			command = "mkdir stats";
