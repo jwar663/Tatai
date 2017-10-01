@@ -66,12 +66,10 @@ public class FeedBackView {
 			feedback = new Label("Correct!");
 			toQuestion = new Button("Finish Quiz");
 			feedback.getStyleClass().add("label-correct");
-			TaitaiModel.saveStats(_numCorrect, _level);// record stats
 		} else if (_last && !_correct) {
 			feedback = new Label("Incorrect, you said " + _incorrect + ".");
 			toQuestion = new Button("Finish Quiz");
 			feedback.getStyleClass().add("label-incorrect");
-			TaitaiModel.saveStats(_numCorrect, _level);
 		} else {
 			feedback = new Label("Incorrect, you said " + _incorrect + ".");
 			toQuestion = new Button("Next Question");
