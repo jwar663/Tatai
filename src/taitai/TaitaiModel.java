@@ -47,9 +47,12 @@ public class TaitaiModel {
 	
 	public static void clearStats() {
 		try {
-			String command = "rm -r mydir";
+			String command = "rm stats/.level1";
 			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
 			Process process = pb.start();
+			command = "rm stats/.level2";
+			pb = new ProcessBuilder("bash", "-c", command);
+			process = pb.start();
 		} catch (Exception f) {
 			f.printStackTrace();
 		}
