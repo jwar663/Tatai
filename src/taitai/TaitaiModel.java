@@ -38,8 +38,6 @@ public class TaitaiModel {
 					command = "echo " + numCorrect + " >> stats/.level2";
 				}
 				ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
-				File workingDirectory = new File("/home/se206/Documents/HTK/MaoriNumbers/");
-				pb.directory(workingDirectory);
 				Process process = pb.start();
 			} catch (Exception e) {
 				e.printStackTrace();
