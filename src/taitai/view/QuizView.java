@@ -57,7 +57,34 @@ public class QuizView {
 		questionLayout = new VBox();
 		toMenuLayout = new VBox();
 		buttonsLayout = new VBox(20);
+		
+		_listen = new Button("Playback");
+		_submit = new Button("Submit Answer");
+		
+		// submit button submits question and displays next view
+		_submit.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if (TaitaiModel.pronouncedCorrectlyBoolean(_wordSaid, TaitaiModel.getWordRequired(_number))) {
+					_correct = true;
+				} else {
+					_correct = false;
+				}
+				TaitaiModel.removeAudioFile();
+				FeedBackView fbv = new FeedBackView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _number);
+				Taitai.changeScene(fbv.getFeedBackView(width, height));
+			}
+		});
+		
+		// listen button event handler 
+		_listen.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				TaitaiModel.playAudio();
+			}
+		});
 
+		
 		// record button event handler, records and starts timer
 		_record.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -67,33 +94,6 @@ public class QuizView {
 				_wordSaid = TaitaiModel.readRecoutFile(); // triedd to make this fit but im unable to execute code or anything so dont know if its correct
 				// just trying to read user input from mike
 				// wanted to have threads here but its too difficult to implement without being able to run any code
-
-				_listen = new Button("Playback");
-				_submit = new Button("Submit Answer");
-
-				// submit button submits question and displays next view
-				_submit.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						if (TaitaiModel.pronouncedCorrectlyBoolean(_wordSaid, TaitaiModel.getWordRequired(_number))) {
-							_correct = true;
-						} else {
-							_correct = false;
-						}
-						//TaitaiModel.removeAudioFile();
-						FeedBackView fbv = new FeedBackView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _number);
-						Taitai.changeScene(fbv.getFeedBackView(width, height));
-					}
-				});
-
-				// listen button event handler 
-				_listen.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						TaitaiModel.playAudio();
-					}
-				});
-
 
 				if (!_isAdded) {
 					_listen.getStyleClass().add("button-function");
