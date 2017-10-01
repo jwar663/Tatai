@@ -15,6 +15,7 @@ import javafx.scene.text.*;
 
 /**
  * Finished view Gui
+ * @author Matthew Taylor, Jaedyn Ward
  */
 public class FinishedView {
 	
@@ -70,7 +71,7 @@ public class FinishedView {
 		layout.setTop(messageLayout);
 		layout.setBottom(toMenuLayout);
 		
-		// if can go to next level
+		// if can go to next level, if >8 was achieved in easy mode
 		if (_goNext) {
 			nextLevel = new Button("Go To Next Level");
 			nextLevelLayout = new VBox();

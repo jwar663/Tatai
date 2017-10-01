@@ -9,7 +9,7 @@ import javafx.geometry.*;
 
 /**
  * Confirmation box for action
- * @author Matthew Taylor
+ * @author Matthew Taylor, Jaedyn Ward
  */
 public class ConfirmBox {
 

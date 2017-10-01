@@ -13,7 +13,7 @@ import javafx.scene.control.*;
 
 /**
  * The feedback scene for the GUI
- * @author Matthew Taylor
+ * @author Matthew Taylor, Jaedyn Ward
  */
 public class FeedBackView {
 
@@ -50,11 +50,13 @@ public class FeedBackView {
 		Button toMenu, toQuestion;
 		VBox feedbackLayout, toMenuLayout, toQuestionLayout;
 		
+		//checking if something was said for recout.mlf
 		_incorrect = TaitaiModel.readRecoutFile();
 		if (_incorrect.equals(" [-8570]  CompleteRecognition: No observations processed in HVite")) {
 			_incorrect = "nothing";
 		}
-		// logic for correct message
+		
+		// logic for correct message and text alignment
 		if (_correct && !_last) {
 			feedback = new Label("Correct!");
 			toQuestion = new Button("Next Question");
@@ -98,11 +100,9 @@ public class FeedBackView {
 				if (_correct && !_last) {
 					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
 					Taitai.changeScene(qv.getQuizView(_width, _height));
-					//cont
 				} else if (_firstTry && !_correct) {
 					QuizView qv = new QuizView(false, _questionNumber, _level, _numCorrect, _number);
 					Taitai.changeScene(qv.getQuizView(_width, _height));
-					// cont
 				} else if (_last) {
 					TaitaiModel.saveStats(_numCorrect, _level);
 					if ((_level == 1) && (_numCorrect >= 8)) {
@@ -128,7 +128,7 @@ public class FeedBackView {
 		});
 		
 		
-		// look andn feel
+		// look and feel
 		feedbackLayout = new VBox();
 		toMenuLayout = new VBox();
 		toQuestionLayout = new VBox();

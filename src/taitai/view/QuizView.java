@@ -15,7 +15,7 @@ import javafx.animation.Timeline;
 
 /**
  * Quiz view Gui
- * @author Matthew
+ * @author Matthew Taylor, Jaedyn Ward
  */
 public class QuizView {
 
@@ -39,7 +39,7 @@ public class QuizView {
 	}
 
 	/*
-	 * gets everthing for approbriate gui
+	 * gets everthing for appropriate gui
 	 */
 	public Scene getQuizView(int width, int height) {
 
@@ -111,7 +111,6 @@ public class QuizView {
 				
 				_isAdded = true;
 				_record.setText("Record");
-				// TODO Auto-generated method stub
 			}
 		});
 
@@ -124,7 +123,7 @@ public class QuizView {
 			}
 		});
 
-		// formattion
+		// format
 		toMenu.getStyleClass().add("button-back");
 		_record.getStyleClass().add("button-function");
 		question.getStyleClass().add("label-quiz");

@@ -13,7 +13,7 @@ import javafx.scene.control.*;
 
 /**
  * View statistics
- * @author Matthew Taylor
+ * @author Matthew Taylor, Jaedyn Ward
  */
 public class StatsView {
 
