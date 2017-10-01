@@ -8,27 +8,15 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.Vector;
 
+/**
+ * @author Matthew Taylor, Jaedyn Ward
+ */
+
 public class TaitaiModel {
 	
 	public static Vector<String> maoriNumbers = new Vector<String>(0,1);
-	public static Vector<Integer> easyScoreVector = new Vector<Integer>(0,1);
-	public static Vector<Integer> hardScoreVector = new Vector<Integer>(0,1);
 	
-	
-	
-//	public static void saveStats(int numCorrect, int level) {
-//		if (level == 1) {
-//			easyScoreVector.add(numCorrect);
-//		} else {
-//			hardScoreVector.add(numCorrect);
-//		}
-//	}
-	
-//	public static void clearStats() {
-//		easyScoreVector.clear();
-//		hardScoreVector.clear();
-//	}
-	
+	//saves the stats to the file corresponding to the level
 	public static void saveStats(int numCorrect, int level) {
 		try {
 				String command;
@@ -45,6 +33,7 @@ public class TaitaiModel {
 			
 	}
 	
+	//clears stats
 	public static void clearStats() {
 		try {
 			String command = "rm stats/.level1";
@@ -58,6 +47,7 @@ public class TaitaiModel {
 		}
 	}
 	
+	//reads the stats from files to label in the stats window
 	public static String[] readStats(String file) {
 		try {
 			LineNumberReader reader  = new LineNumberReader(new FileReader(file));
@@ -66,7 +56,7 @@ public class TaitaiModel {
 			while ((lineRead = reader.readLine()) != null) {
 				// do nothing
 			}
-			count = reader.getLineNumber(); // might need to + 1 to cnt
+			count = reader.getLineNumber();
 			reader.close();
 			String[] stats = new String[count];
 			BufferedReader br = new BufferedReader(new FileReader(file));
@@ -83,11 +73,6 @@ public class TaitaiModel {
 		}
 	}
 
-	
-	//public static String[] getStats(int level) {
-		// finish
-	//}
-
 	//checks if the word was pronounced correctly and returns a boolean
 	public static boolean pronouncedCorrectlyBoolean(String wordSaid, String wordRequired) {
 		if(wordSaid.equals(wordRequired)) {
@@ -96,20 +81,8 @@ public class TaitaiModel {
 			return false;
 		}
 	}
-	
-	//checks if the word was pronounced correctly and returns a corresponding message
-	private static String pronouncedCorrectlyMessage(String wordSaid, String wordRequired) {
-		String outputString = "";
-		if(wordSaid.equals(wordRequired)) {
-			outputString = "Correct!";
-		} else {
-			outputString = "Incorrect, you said " + wordSaid;
-		}
-		return outputString;
-	}
-	
 
-	//starts the testing in easy mode, using multiple other functions 
+	//starts the test, by finding a random number that corresponds to the level
 	public static int startTest(int level) {
 		int testNumber;
 		if (level == 1) {
@@ -120,6 +93,7 @@ public class TaitaiModel {
 		return testNumber;
 	}
 	
+	//returns the word from the maori dictionary that corresponds to the number
 	public static String getWordRequired(int number) {
 		return maoriNumbers.get(number);
 	}
@@ -228,16 +202,6 @@ public class TaitaiModel {
 		maoriNumbers.addElement("iwa tekau maa waru");
 		maoriNumbers.addElement("iwa tekau maa iwa");
 	}
-	
-	//adds an element to the easy score vector of the most recent test
-	public static void saveEasyScore(int score) {
-		easyScoreVector.addElement(score);
-	}
-	
-	//adds an element to the hard score vector of the most recent test
-	public static void saveHardScore(int score) {
-		hardScoreVector.addElement(score);
-	}
 
 	//finds a random integer, given a minimum and maximum integer
 	private static int randomInt(int lowerLimit, int upperLimit) {
@@ -292,16 +256,19 @@ public class TaitaiModel {
 		}
 	}
 	
+	//function to play the file that was previously recorded
 	public static void playAudio() {
 		String command = "aplay foo.wav";
 		createNewProcess(command);
 	}
 	
+	//uses the dictionary to identify what was said and store it in a file
 	public static void writeToRecout() {
 		String command = "HVite -H HMMs/hmm15/macros -H HMMs/hmm15/hmmdefs -C user/configLR  -w user/wordNetworkNum -o SWT -l '*' -i recout.mlf -p 0.0 -s 5.0  user/dictionaryD user/tiedList foo.wav 1> recout.mlf";
 		createNewProcess(command);
 	}
 	
+	//records the audio to be compared
 	public static void recordAudio(String time) {
 		String command = "arecord -d " + time + " -r 22050 -c 1 -i -t wav -f s16_LE foo.wav";
 		createNewProcess(command);

@@ -11,8 +11,9 @@ import taitai.view.MenuView;
 
 /**
  * Taitai Maori number pronounciation practiser
- * @author Matthew Taylor
+ * @author Matthew Taylor, Jaedyn Ward
  */
+
 public class Taitai extends Application {
 
 	private final static int HEIGHT = 700;
@@ -25,8 +26,10 @@ public class Taitai extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		
+		//initialises maoriNumbers vector.
 		TaitaiModel.assignMaoriNumbers();
 
+		//creates folders/files for statistics
 		try {
 			String command;
 			command = "mkdir stats";
@@ -42,12 +45,12 @@ public class Taitai extends Application {
 			e.printStackTrace();
 		}
 
-		//initilising the gui
+		//initialising the gui
 		MenuView mv = new MenuView();
 		_menu = mv.getMenuView(WIDTH, HEIGHT);
 
 		_window = primaryStage;
-		_window.setTitle("Taitai");
+		_window.setTitle("Tatai");
 		_window.setScene(_menu);
 		_window.centerOnScreen();
 		_window.setResizable(false);

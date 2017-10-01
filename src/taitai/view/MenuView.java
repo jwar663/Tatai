@@ -28,7 +28,7 @@ public class MenuView {
 		
 		BorderPane layout;
 		VBox buttonLayout, titleLayout;
-		welcome = new Label("Welcome to Taitai!");
+		welcome = new Label("Welcome to Tatai!");
 		_level1 = new Button("Practice Numbers 1-9");
 		_level2 = new Button("Practice Numbers 1-99");
 		_stats = new Button("View Statistics");
