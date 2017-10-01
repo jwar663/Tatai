@@ -306,9 +306,4 @@ public class TaitaiModel {
 		String command = "arecord -d " + time + " -r 22050 -c 1 -i -t wav -f s16_LE foo.wav";
 		createNewProcess(command);
 	}
-	
-	
-	public static void main(String[] args) {
-	}
-
 }
