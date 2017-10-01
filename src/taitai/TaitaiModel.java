@@ -134,7 +134,7 @@ public class TaitaiModel {
 	}
 	
 	//Assigns all of the numbers in maori to their corresponding position in a vector
-	private static void assignMaoriNumbers() {
+	public static void assignMaoriNumbers() {
 		maoriNumbers.clear();
 		maoriNumbers.addElement("kore");
 		maoriNumbers.addElement("tahi");
