@@ -16,7 +16,7 @@ import taitai.view.MenuView;
 
 public class Taitai extends Application {
 
-	private final static int HEIGHT = 700;
+	private final static int HEIGHT = 650;
 	private final static int WIDTH = 850;
 
 	private static Stage _window;
