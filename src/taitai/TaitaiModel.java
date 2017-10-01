@@ -15,28 +15,18 @@ public class TaitaiModel {
 	static Vector<Integer> hardScoreVector = new Vector<Integer>(0,1);
 	
 	public static void saveStats(int numCorrect, int level) {
-		try {
 			String command;
 			if (level == 1) {
 				command = "echo " + numCorrect + " >> stats/.level1";
 			} else {
 				command = "echo " + numCorrect + " >> stats/.level2";
 			}
-			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
-			Process process = pb.start();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			createNewProcess(command);
 	}
 	
 	public static void clearStats() {
-		try {
 			String command = "rm -r mydir";
-			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
-			Process process = pb.start();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			createNewProcess(command);
 	}
 	
 	//public static String[] getStats(int level) {
@@ -66,7 +56,7 @@ public class TaitaiModel {
 	//starts the testing in easy mode, using multiple other functions
 	public static int startEasyMode() {
 		int score = 0;
-		String command = "sh /home/se206/Documents/HTK/MaoriNumbers/GoSpeech"; // se206?
+		String command = "arecord -d 3 -r 22050 -c 1 -i -t wav -f s16_LE foo.wav"; // se206?
 		//for(int i = 0; i < 10; i++) {
 			int testNumber = randomInt(1,9);
 			String wordRequired = maoriNumbers.get(testNumber);
@@ -266,18 +256,33 @@ public class TaitaiModel {
 			pb.redirectErrorStream(true);
 			Process process = pb.start();
 			BufferedReader stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			process.waitFor();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public static void playAudio() {
+		String command = "aplay foo.wav";
+		createNewProcess(command);
+	}
+	
+	public static void writeToRecout() {
+		String command = "HVite -H HMMs/hmm15/macros -H HMMs/hmm15/hmmdefs -C user/configLR  -w user/wordNetworkNum -o SWT -l '*' -i recout.mlf -p 0.0 -s 5.0  user/dictionaryD user/tiedList foo.wav 1> recout.mlf";
+		createNewProcess(command);
+	}
+	
+	public static void recordAudio(String time) {
+		String command = "arecord -d " + time + " -r 22050 -c 1 -i -t wav -f s16_LE foo.wav";
+		createNewProcess(command);
+	}
+	
+	public static void removeAudioFile() {
+		String command = "rm -r foo.wav";
+		createNewProcess(command);
+	}
+	
 	public static void main(String[] args) {
-//		String command = "sh /home/se206/Documents/HTK/MaoriNumbers/GoSpeech";
-//		createNewProcess(command);
-		String outputString = readRecoutFile();
-		System.out.println(10);
-		System.out.println(outputString);
-		
 	}
 
 }

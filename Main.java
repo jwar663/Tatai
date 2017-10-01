@@ -221,9 +221,14 @@ public class Main {
 			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
 			File workingDirectory = new File("/home/se206/Documents/HTK/MaoriNumbers/");
 			pb.directory(workingDirectory);
+			System.out.println(4);
 			pb.redirectErrorStream(true);
+			System.out.println(5);
 			Process process = pb.start();
 			BufferedReader stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			System.out.println(6);
+			process.waitFor();
+			System.out.println(10);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -231,6 +236,16 @@ public class Main {
 	public static void main(String[] args) {
 //		String command = "sh /home/se206/Documents/HTK/MaoriNumbers/GoSpeech";
 //		createNewProcess(command);
+		System.out.println(1);
+		createNewProcess("arecord -d 3 -r 22050 -c 1 -i -t wav -f s16_LE foo.wav");
+		System.out.println(2);
+		createNewProcess("HVite -H HMMs/hmm15/macros -H HMMs/hmm15/hmmdefs -C user/configLR  -w user/wordNetworkNum -o SWT -l '*' -i recout.mlf -p 0.0 -s 5.0  user/dictionaryD user/tiedList foo.wav 1> recout.mlf");
+		System.out.println(3);
+		createNewProcess("aplay foo.wav");
+		
+		
+		
+		
 		String outputString = readRecoutFile();
 		System.out.println(10);
 		System.out.println(outputString);
