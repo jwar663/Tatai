@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.*;
 import taitai.Taitai;
+import taitai.TaitaiModel;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -21,6 +22,9 @@ public class FinishedView {
 	private int _numCorrect;
 	private boolean _goNext;
 	
+	/*
+	 * constructor
+	 */
 	public FinishedView(boolean goNext, int numCorrect) {
 		_numCorrect = numCorrect;
 		_goNext = goNext;
@@ -41,6 +45,7 @@ public class FinishedView {
 		messageLayout = new VBox();
 		toMenuLayout = new VBox();
 		
+		// go to menu view
 		toMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -49,6 +54,7 @@ public class FinishedView {
 			}
 		});
 		
+		// format and style
 		message.getStyleClass().add("label-numCorrect");
 		toMenu.getStyleClass().add("button-back");
 		
@@ -64,6 +70,7 @@ public class FinishedView {
 		layout.setTop(messageLayout);
 		layout.setBottom(toMenuLayout);
 		
+		// if can go to next level
 		if (_goNext) {
 			nextLevel = new Button("Go To Next Level");
 			nextLevelLayout = new VBox();
@@ -71,7 +78,7 @@ public class FinishedView {
 			nextLevel.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
-					QuizView qv = new QuizView(true, 1, 2, 0);
+					QuizView qv = new QuizView(true, 1, 2, 0, TaitaiModel.startTest(2));
 					Taitai.changeScene(qv.getQuizView(width, height));
 				}
 			});
@@ -88,4 +95,3 @@ public class FinishedView {
 		return _finished;
 	}
 }
-	

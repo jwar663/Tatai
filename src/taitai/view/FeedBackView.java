@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import taitai.Taitai;
+import taitai.TaitaiModel;
 import javafx.scene.control.*;
 
 /**
@@ -17,14 +18,18 @@ public class FeedBackView {
 
 	private Scene _feedback;
 	private boolean _firstTry, _correct, _last;
-	int _questionNumber, _width, _height, _level, _numCorrect;
+	int _number, _questionNumber, _width, _height, _level, _numCorrect;
 	
-	public FeedBackView(boolean firstTry, int questionNumber, int level, int numCorrect, boolean correct) {
+	/*
+	 * constructor
+	 */
+	public FeedBackView(boolean firstTry, int questionNumber, int level, int numCorrect, boolean correct, int number) {
 		_correct = correct; 
 		_firstTry = firstTry; 
 		_questionNumber = questionNumber;
 		_level = level;
 		_numCorrect = numCorrect;
+		_number = number;
 		
 		if (questionNumber == 10) {
 			_last = true;
@@ -56,12 +61,12 @@ public class FeedBackView {
 			feedback = new Label("Correct!");
 			toQuestion = new Button("Finish Quiz");
 			feedback.getStyleClass().add("label-correct");
-			// record stats
+			TaitaiModel.saveStats(_numCorrect, _level);// record stats
 		} else if (_last && !_correct) {
 			feedback = new Label("Incorrect!");
 			toQuestion = new Button("Finish Quiz");
 			feedback.getStyleClass().add("label-incorrect");
-			// record stats
+			TaitaiModel.saveStats(_numCorrect, _level);
 		} else {
 			feedback = new Label("Incorrect");
 			toQuestion = new Button("Next Question");
@@ -71,27 +76,30 @@ public class FeedBackView {
 		layout = new BorderPane();
 		toMenu = new Button("Go Back to Menu");
 		
+		// next question action listener
 		toQuestion.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) { // make questions asked appropriate
 				if (_correct && !_last) {
-					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect);
+					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
 					Taitai.changeScene(qv.getQuizView(_width, _height));
 					//cont
 				} else if (_firstTry && !_correct) {
-					QuizView qv = new QuizView(false, _questionNumber, _level, _numCorrect);
+					QuizView qv = new QuizView(false, _questionNumber, _level, _numCorrect, _number);
 					Taitai.changeScene(qv.getQuizView(_width, _height));
 					// cont
 				} else if (_last) {
-					if ((_level == 1) && (_numCorrect >= 8)) { // && got 8 out of 10
+					if ((_level == 1) && (_numCorrect >= 8)) {
+						TaitaiModel.saveStats(_numCorrect, _level);
 						FinishedView fv = new FinishedView(true, _numCorrect);
 						Taitai.changeScene(fv.getFinishedView(_width, _height));
 					} else {
+						TaitaiModel.saveStats(_numCorrect, _level);
 						FinishedView fv = new FinishedView(false, _numCorrect);
 						Taitai.changeScene(fv.getFinishedView(_width, _height));
 					}
 				} else {
-					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect);
+					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
 					Taitai.changeScene(qv.getQuizView(_width, _height));
 				}	
 			}
@@ -105,6 +113,8 @@ public class FeedBackView {
 			}
 		});
 		
+		
+		// look andn feel
 		feedbackLayout = new VBox();
 		toMenuLayout = new VBox();
 		toQuestionLayout = new VBox();

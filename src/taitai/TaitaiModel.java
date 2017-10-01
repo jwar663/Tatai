@@ -1,4 +1,3 @@
-
 package taitai;
 
 import java.io.BufferedReader;
@@ -6,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.util.Vector;
 
 public class TaitaiModel {
@@ -39,6 +39,32 @@ public class TaitaiModel {
 		}
 	}
 	
+	public static String[] readStats(String file) {
+		try {
+			LineNumberReader reader  = new LineNumberReader(new FileReader(file));
+			int count = 0;
+			String lineRead = "";
+			while ((lineRead = reader.readLine()) != null) {
+				// do nothing
+			}
+			count = reader.getLineNumber(); // might need to + 1 to cnt
+			reader.close();
+			String[] stats = new String[count];
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String line;
+			for (int i = 0; i < count; i++) {
+				line = br.readLine();
+				stats[i] = line;
+			}
+			br.close();
+			return stats;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	
 	//public static String[] getStats(int level) {
 		// finish
 	//}
@@ -63,24 +89,18 @@ public class TaitaiModel {
 		return outputString;
 	}
 	
-	//starts the testing in easy mode, using multiple other functions
-	public static int startEasyMode() {
-		int score = 0;
-		String command = "sh /home/se206/Documents/HTK/MaoriNumbers/GoSpeech"; // se206?
-		//for(int i = 0; i < 10; i++) {
-			int testNumber = randomInt(1,9);
-			String wordRequired = maoriNumbers.get(testNumber);
-			createNewProcess(command);
-			String wordSaid = readRecoutFile();
-			if(pronouncedCorrectlyBoolean(wordSaid, wordRequired)) {
-				score++;
-			}
-			//String message = pronouncedCorrectlyMessage(wordSaid, wordRequired);
+	//starts the testing in easy mode, using multiple other functions 
+	public static int startTest(int level) {
+		int testNumber;
+		if (level == 1) {
+			testNumber = randomInt(1,9);
+		} else {
+			testNumber = randomInt(1,99);
+		}
 			
-		//}
-		//saveEasyScore(score);
-		return score;
+		return testNumber;
 	}
+
 	
 	//starts the testing in hard mode, using multiple other functions
 	private static int startHardMode() {
@@ -99,6 +119,10 @@ public class TaitaiModel {
 		//}
 		saveHardScore(score);
 		return score;
+	}
+	
+	public static String getWordRequired(int number) {
+		return maoriNumbers.get(number);
 	}
 	
 	//Assigns all of the numbers in maori to their corresponding position in a vector
@@ -258,7 +282,7 @@ public class TaitaiModel {
 	//when i put waitFor() in, the process never finishes...
 
 	//creates a new process that takes a bash command as an input
-	private static void createNewProcess(String command) {
+	public static void createNewProcess(String command) {
 		try {
 			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
 			File workingDirectory = new File("/home/se206/Documents/HTK/MaoriNumbers/");

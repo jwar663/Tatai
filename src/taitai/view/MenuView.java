@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.*;
 import taitai.Taitai;
+import taitai.TaitaiModel;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -40,6 +41,7 @@ public class MenuView {
 		_level2.getStyleClass().add("button-menu");
 		_stats.getStyleClass().add("button-menu");
 		
+		// goes to stats view
 		_stats.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -47,22 +49,20 @@ public class MenuView {
 				Taitai.changeScene(sv.getStatsView(width, height));
 			}
 		});
-		
+		// button event goes to level 1 quiz
 		_level1.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				QuizView qv = new QuizView(true, 1, 1, 0);
+				QuizView qv = new QuizView(true, 1, 1, 0, TaitaiModel.startTest(1));
 				Taitai.changeScene(qv.getQuizView(width, height));
-				// more
 			}
 		});
-		
+		// button event goes to level 2 quiz
 		_level2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				QuizView qv = new QuizView(true, 1, 2, 0);
+				QuizView qv = new QuizView(true, 1, 2, 0, TaitaiModel.startTest(2));
 				Taitai.changeScene(qv.getQuizView(width, height));
-				// mores
 			}
 		});
 		

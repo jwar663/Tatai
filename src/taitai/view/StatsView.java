@@ -10,6 +10,7 @@ import taitai.Taitai;
 import taitai.TaitaiModel;
 import javafx.scene.control.*;
 
+
 /**
  * View statistics
  * @author Matthew Taylor
@@ -28,6 +29,13 @@ public class StatsView {
 		VBox list9Layout, list99Layout, statisticsLayout;
 		HBox toMenuLayout, listsLayout;
 		ListView<String> list9, list99;
+
+		if (TaitaiModel.readStats("stats/.level1") != null) {
+			_to9 = TaitaiModel.readStats("stats/.level1");
+		}
+		if (TaitaiModel.readStats("stats/.level2") != null) {
+			_to99 = TaitaiModel.readStats("stats/.level2");
+		}
 
 		layout = new BorderPane();
 		clearStats = new Button("Clear Stats");
@@ -56,6 +64,9 @@ public class StatsView {
 				confirmation = _cb.displayBox("Clear Statistics", "   Are you sure you wish to clear all your statistics?   ");
 				if (confirmation) {
 					TaitaiModel.clearStats();
+					// might not need
+					StatsView sv = new StatsView();
+					Taitai.changeScene(sv.getStatsView(width, height));
 				}
 			}
 		});
@@ -101,5 +112,6 @@ public class StatsView {
 		}
 		return list;
 	}
+
 
 }
