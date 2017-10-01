@@ -48,6 +48,7 @@ public class FeedBackView {
 		Label feedback;
 		Button toMenu, toQuestion;
 		VBox feedbackLayout, toMenuLayout, toQuestionLayout;
+		
 		_incorrect = TaitaiModel.readRecoutFile();
 		if (_incorrect.equals(" [-8570]  CompleteRecognition: No observations processed in HVite")) {
 			_incorrect = "nothing";
@@ -56,25 +57,30 @@ public class FeedBackView {
 		if (_correct && !_last) {
 			feedback = new Label("Correct!");
 			toQuestion = new Button("Next Question");
+			feedback.setWrapText(true);
 			feedback.getStyleClass().add("label-correct");
 		} else if (_firstTry && !_correct) {
 			
 			feedback = new Label("Try Again, you said " + _incorrect + ".");
 			toQuestion = new Button("Retry");
+			feedback.setWrapText(true);
 			feedback.getStyleClass().add("label-tryAgain");
 		} else if (_last && _correct) {
 			feedback = new Label("Correct!");
 			toQuestion = new Button("Finish Quiz");
+			feedback.setWrapText(true);
 			feedback.getStyleClass().add("label-correct");
 			TaitaiModel.saveStats(_numCorrect, _level);// record stats
 		} else if (_last && !_correct) {
 			feedback = new Label("Incorrect, you said " + _incorrect + ".");
 			toQuestion = new Button("Finish Quiz");
+			feedback.setWrapText(true);
 			feedback.getStyleClass().add("label-incorrect");
 			TaitaiModel.saveStats(_numCorrect, _level);
 		} else {
 			feedback = new Label("Incorrect, you said " + _incorrect + ".");
 			toQuestion = new Button("Next Question");
+			feedback.setWrapText(true);
 			feedback.getStyleClass().add("label-incorrect");
 		}	
 		
