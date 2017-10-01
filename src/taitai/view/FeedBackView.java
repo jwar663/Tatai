@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.TextAlignment;
 import taitai.Taitai;
 import taitai.TaitaiModel;
 import javafx.scene.control.*;
@@ -58,27 +59,32 @@ public class FeedBackView {
 			feedback = new Label("Correct!");
 			toQuestion = new Button("Next Question");
 			feedback.setWrapText(true);
+			feedback.setTextAlignment(TextAlignment.CENTER);
 			feedback.getStyleClass().add("label-correct");
 		} else if (_firstTry && !_correct) {
 			
 			feedback = new Label("Try Again, you said " + _incorrect + ".");
 			toQuestion = new Button("Retry");
 			feedback.setWrapText(true);
+			feedback.setTextAlignment(TextAlignment.CENTER);
 			feedback.getStyleClass().add("label-tryAgain");
 		} else if (_last && _correct) {
 			feedback = new Label("Correct!");
 			toQuestion = new Button("Finish Quiz");
 			feedback.setWrapText(true);
+			feedback.setTextAlignment(TextAlignment.CENTER);
 			feedback.getStyleClass().add("label-correct");
 		} else if (_last && !_correct) {
 			feedback = new Label("Incorrect, you said " + _incorrect + ".");
 			toQuestion = new Button("Finish Quiz");
 			feedback.setWrapText(true);
+			feedback.setTextAlignment(TextAlignment.CENTER);
 			feedback.getStyleClass().add("label-incorrect");
 		} else {
 			feedback = new Label("Incorrect, you said " + _incorrect + ".");
 			toQuestion = new Button("Next Question");
 			feedback.setWrapText(true);
+			feedback.setTextAlignment(TextAlignment.CENTER);
 			feedback.getStyleClass().add("label-incorrect");
 		}	
 		
