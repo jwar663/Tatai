@@ -89,16 +89,11 @@ public class QuizView {
 		_record.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-<<<<<<< HEAD
 				if (_level == 1) {
 					TaitaiModel.recordAudio("3");
 				} else {
 					TaitaiModel.recordAudio("5");
 				}
-=======
-				_record.setText("Recording..");
-				TaitaiModel.recordAudio("3");
->>>>>>> 9b67d49c05b9168f917406bdbf197f8a7c5db422
 				TaitaiModel.writeToRecout();
 				_wordSaid = TaitaiModel.readRecoutFile(); // triedd to make this fit but im unable to execute code or anything so dont know if its correct
 				// just trying to read user input from mike

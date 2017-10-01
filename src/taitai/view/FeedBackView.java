@@ -49,6 +49,9 @@ public class FeedBackView {
 		Button toMenu, toQuestion;
 		VBox feedbackLayout, toMenuLayout, toQuestionLayout;
 		_incorrect = TaitaiModel.readRecoutFile();
+		if (_incorrect.equals(" [-8570]  CompleteRecognition: No observations processed in HVite")) {
+			_incorrect = "nothing";
+		}
 		// logic for correct message
 		if (_correct && !_last) {
 			feedback = new Label("Correct!");

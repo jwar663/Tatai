@@ -33,13 +33,13 @@
 	-fx-padding: 180 0 50 0;
 }
 .label-incorrect{
-	-fx-font-size: 35.0pt;
+	-fx-font-size: 27.0pt;
 	-fx-font-family: "Helvetica";
 	-fx-text-fill: #D32F2F;
 	-fx-padding: 180 0 50 0;
 }
 .label-tryAgain{
-	-fx-font-size: 35.0pt;
+	-fx-font-size: 27.0pt;
 	-fx-font-family: "Helvetica";
 	-fx-text-fill: #FF9800;
 	-fx-padding: 180 0 50 0;
