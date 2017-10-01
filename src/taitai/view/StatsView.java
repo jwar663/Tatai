@@ -65,6 +65,7 @@ public class StatsView {
 				if (confirmation) {
 					TaitaiModel.clearStats();
 					// might not need
+					
 					StatsView sv = new StatsView();
 					Taitai.changeScene(sv.getStatsView(width, height));
 				}
