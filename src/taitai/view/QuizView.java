@@ -89,6 +89,7 @@ public class QuizView {
 		_record.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				_record.setText("Recording..");
 				TaitaiModel.recordAudio("3");
 				TaitaiModel.writeToRecout();
 				_wordSaid = TaitaiModel.readRecoutFile(); // triedd to make this fit but im unable to execute code or anything so dont know if its correct
@@ -102,6 +103,7 @@ public class QuizView {
 				}
 				
 				_isAdded = true;
+				_record.setText("Record");
 				// TODO Auto-generated method stub
 			}
 		});
