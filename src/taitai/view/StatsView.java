@@ -65,13 +65,8 @@ public class StatsView {
 				confirmation = _cb.displayBox("Clear Statistics", "   Are you sure you wish to clear all your statistics?   ");
 				if (confirmation) {
 					TaitaiModel.clearStats();
-					// might not need
-					
-					_list9.getItems().clear();
-					_list99.getItems().clear();
-					
-					StatsView sv = new StatsView();
-					Taitai.changeScene(sv.getStatsView(width, height));
+					MenuView sv = new MenuView();
+					Taitai.changeScene(sv.getMenuView(width, height));
 				}
 			}
 		});
