@@ -66,6 +66,7 @@ public class QuizView {
 			@Override
 			public void handle(ActionEvent event) {
 				if (TaitaiModel.pronouncedCorrectlyBoolean(_wordSaid, TaitaiModel.getWordRequired(_number))) {
+					_numCorrect++;
 					_correct = true;
 				} else {
 					_correct = false;
