@@ -65,14 +65,14 @@ public class QuizView {
 		_submit.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (TaitaiModel.pronouncedCorrectlyBoolean(_wordSaid, TaitaiModel.getWordRequired(_number))) {
-					_correct = true;
-				} else {
-					_correct = false;
-				}
-				TaitaiModel.removeAudioFile();
-				FeedBackView fbv = new FeedBackView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _number);
-				Taitai.changeScene(fbv.getFeedBackView(width, height));
+					if (TaitaiModel.pronouncedCorrectlyBoolean(_wordSaid, TaitaiModel.getWordRequired(_number))) {
+						_correct = true;
+						_numCorrect++;
+					} else {
+						_correct = false;
+					}
+					FeedBackView fbv = new FeedBackView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _number);
+					Taitai.changeScene(fbv.getFeedBackView(width, height));
 			}
 		});
 		
@@ -80,7 +80,7 @@ public class QuizView {
 		_listen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				TaitaiModel.playAudio();
+					TaitaiModel.playAudio();	
 			}
 		});
 
@@ -89,7 +89,11 @@ public class QuizView {
 		_record.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				TaitaiModel.recordAudio("3");
+				if (_level == 1) {
+					TaitaiModel.recordAudio("3");
+				} else {
+					TaitaiModel.recordAudio("5");
+				}
 				TaitaiModel.writeToRecout();
 				_wordSaid = TaitaiModel.readRecoutFile(); // triedd to make this fit but im unable to execute code or anything so dont know if its correct
 				// just trying to read user input from mike

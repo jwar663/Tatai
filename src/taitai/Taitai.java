@@ -1,6 +1,7 @@
 package taitai;
 
 import java.io.IOException;
+import java.util.Vector;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -19,10 +20,11 @@ public class Taitai extends Application {
 
 	private static Stage _window;
 	private Scene _menu;
+	
 
 	@Override
 	public void start(Stage primaryStage) {
-
+		TaitaiModel.assignMaoriNumbers();
 		try {
 			String command;
 			command = "mkdir stats";

@@ -19,6 +19,7 @@ public class FeedBackView {
 	private Scene _feedback;
 	private boolean _firstTry, _correct, _last;
 	int _number, _questionNumber, _width, _height, _level, _numCorrect;
+	String _incorrect;
 	
 	/*
 	 * constructor
@@ -47,14 +48,15 @@ public class FeedBackView {
 		Label feedback;
 		Button toMenu, toQuestion;
 		VBox feedbackLayout, toMenuLayout, toQuestionLayout;
-		
+		_incorrect = TaitaiModel.readRecoutFile();
 		// logic for correct message
 		if (_correct && !_last) {
 			feedback = new Label("Correct!");
 			toQuestion = new Button("Next Question");
 			feedback.getStyleClass().add("label-correct");
 		} else if (_firstTry && !_correct) {
-			feedback = new Label("Try Again");
+			
+			feedback = new Label("Try Again, you said " + _incorrect + ".");
 			toQuestion = new Button("Retry");
 			feedback.getStyleClass().add("label-tryAgain");
 		} else if (_last && _correct) {
@@ -63,12 +65,12 @@ public class FeedBackView {
 			feedback.getStyleClass().add("label-correct");
 			TaitaiModel.saveStats(_numCorrect, _level);// record stats
 		} else if (_last && !_correct) {
-			feedback = new Label("Incorrect!");
+			feedback = new Label("Incorrect, you said " + _incorrect + ".");
 			toQuestion = new Button("Finish Quiz");
 			feedback.getStyleClass().add("label-incorrect");
 			TaitaiModel.saveStats(_numCorrect, _level);
 		} else {
-			feedback = new Label("Incorrect");
+			feedback = new Label("Incorrect, you said " + _incorrect + ".");
 			toQuestion = new Button("Next Question");
 			feedback.getStyleClass().add("label-incorrect");
 		}	

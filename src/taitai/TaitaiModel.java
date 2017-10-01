@@ -10,23 +10,53 @@ import java.util.Vector;
 
 public class TaitaiModel {
 	
-	static Vector<String> maoriNumbers = new Vector<String>(0,1);
-	static Vector<Integer> easyScoreVector = new Vector<Integer>(0,1);
-	static Vector<Integer> hardScoreVector = new Vector<Integer>(0,1);
+	public static Vector<String> maoriNumbers = new Vector<String>(0,1);
+	public static Vector<Integer> easyScoreVector = new Vector<Integer>(0,1);
+	public static Vector<Integer> hardScoreVector = new Vector<Integer>(0,1);
+	
+	
+	
+//	public static void saveStats(int numCorrect, int level) {
+//		if (level == 1) {
+//			easyScoreVector.add(numCorrect);
+//		} else {
+//			hardScoreVector.add(numCorrect);
+//		}
+//	}
+	
+//	public static void clearStats() {
+//		easyScoreVector.clear();
+//		hardScoreVector.clear();
+//	}
 	
 	public static void saveStats(int numCorrect, int level) {
-			String command;
-			if (level == 1) {
-				command = "echo " + numCorrect + " >> stats/.level1";
-			} else {
-				command = "echo " + numCorrect + " >> stats/.level2";
+		try {
+				String command;
+				if (level == 1) {
+					command = "echo " + numCorrect + " >> stats/.level1";
+				} else {
+					command = "echo " + numCorrect + " >> stats/.level2";
+				}
+				ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
+				File workingDirectory = new File("/home/se206/Documents/HTK/MaoriNumbers/");
+				pb.directory(workingDirectory);
+				Process process = pb.start();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			createNewProcess(command);
+			
 	}
 	
 	public static void clearStats() {
+		try {
 			String command = "rm -r mydir";
-			createNewProcess(command);
+			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
+			File workingDirectory = new File("/home/se206/Documents/HTK/MaoriNumbers/");
+			pb.directory(workingDirectory);
+			Process process = pb.start();
+		} catch (Exception f) {
+			f.printStackTrace();
+		}
 	}
 	
 	public static String[] readStats(String file) {
@@ -90,51 +120,13 @@ public class TaitaiModel {
 		}
 		return testNumber;
 	}
-
-	//starts the testing in easy mode, using multiple other functions
-	public static int startEasyMode() {
-		int score = 0;
-		String command = "arecord -d 3 -r 22050 -c 1 -i -t wav -f s16_LE foo.wav"; // se206?
-		//for(int i = 0; i < 10; i++) {
-			int testNumber = randomInt(1,9);
-			String wordRequired = maoriNumbers.get(testNumber);
-			createNewProcess(command);
-			String wordSaid = readRecoutFile();
-			if(pronouncedCorrectlyBoolean(wordSaid, wordRequired)) {
-				score++;
-			}
-			//String message = pronouncedCorrectlyMessage(wordSaid, wordRequired);
-
-			
-		return testNumber;
-	}
-
-	
-	//starts the testing in hard mode, using multiple other functions
-	private static int startHardMode() {
-		int score = 0;
-		String command = "sh /home/se206/Documents/HTK/MaoriNumbers/GoSpeech";
-		//for(int i = 0; i < 10; i++) {
-			int testNumber = randomInt(1,99);
-			String wordRequired = maoriNumbers.get(testNumber);
-			createNewProcess(command);
-			String wordSaid = readRecoutFile();
-			if(pronouncedCorrectlyBoolean(wordSaid, wordRequired)) {
-				score++;
-			}
-			//String message = pronouncedCorrectlyMessage(wordSaid, wordRequired);
-			
-		//}
-		saveHardScore(score);
-		return score;
-	}
 	
 	public static String getWordRequired(int number) {
 		return maoriNumbers.get(number);
 	}
 	
 	//Assigns all of the numbers in maori to their corresponding position in a vector
-	private static void assignMaoriNumbers() {
+	public static void assignMaoriNumbers() {
 		maoriNumbers.clear();
 		maoriNumbers.addElement("kore");
 		maoriNumbers.addElement("tahi");
@@ -147,95 +139,95 @@ public class TaitaiModel {
 		maoriNumbers.addElement("waru");
 		maoriNumbers.addElement("iwa");
 		maoriNumbers.addElement("tekau");
-		maoriNumbers.addElement("tekau ma tahi");
-		maoriNumbers.addElement("tekau ma rua");
-		maoriNumbers.addElement("tekau ma toru");
-		maoriNumbers.addElement("tekau ma whaa");
-		maoriNumbers.addElement("tekau ma rima");
-		maoriNumbers.addElement("tekau ma ono");
-		maoriNumbers.addElement("tekau ma whitu");
-		maoriNumbers.addElement("tekau ma waru");
-		maoriNumbers.addElement("tekau ma iwa");
+		maoriNumbers.addElement("tekau maa tahi");
+		maoriNumbers.addElement("tekau maa rua");
+		maoriNumbers.addElement("tekau maa toru");
+		maoriNumbers.addElement("tekau maa whaa");
+		maoriNumbers.addElement("tekau maa rima");
+		maoriNumbers.addElement("tekau maa ono");
+		maoriNumbers.addElement("tekau maa whitu");
+		maoriNumbers.addElement("tekau maa waru");
+		maoriNumbers.addElement("tekau maa iwa");
 		maoriNumbers.addElement("rua tekau");
-		maoriNumbers.addElement("rua tekau ma tahi");
-		maoriNumbers.addElement("rua tekau ma rua");
-		maoriNumbers.addElement("rua tekau ma toru");
-		maoriNumbers.addElement("rua tekau ma whaa");
-		maoriNumbers.addElement("rua tekau ma rima");
-		maoriNumbers.addElement("rua tekau ma ono");
-		maoriNumbers.addElement("rua tekau ma whitu");
-		maoriNumbers.addElement("rua tekau ma waru");
-		maoriNumbers.addElement("rua tekau ma iwa");
+		maoriNumbers.addElement("rua tekau maa tahi");
+		maoriNumbers.addElement("rua tekau maa rua");
+		maoriNumbers.addElement("rua tekau maa toru");
+		maoriNumbers.addElement("rua tekau maa whaa");
+		maoriNumbers.addElement("rua tekau maa rima");
+		maoriNumbers.addElement("rua tekau maa ono");
+		maoriNumbers.addElement("rua tekau maa whitu");
+		maoriNumbers.addElement("rua tekau maa waru");
+		maoriNumbers.addElement("rua tekau maa iwa");
 		maoriNumbers.addElement("toru tekau");
-		maoriNumbers.addElement("toru tekau ma tahi");
-		maoriNumbers.addElement("toru tekau ma rua");
-		maoriNumbers.addElement("toru tekau ma toru");
-		maoriNumbers.addElement("toru tekau ma whaa");
-		maoriNumbers.addElement("toru tekau ma rima");
-		maoriNumbers.addElement("toru tekau ma ono");
-		maoriNumbers.addElement("toru tekau ma whitu");
-		maoriNumbers.addElement("toru tekau ma waru");
-		maoriNumbers.addElement("toru tekau ma iwa");
+		maoriNumbers.addElement("toru tekau maa tahi");
+		maoriNumbers.addElement("toru tekau maa rua");
+		maoriNumbers.addElement("toru tekau maa toru");
+		maoriNumbers.addElement("toru tekau maa whaa");
+		maoriNumbers.addElement("toru tekau maa rima");
+		maoriNumbers.addElement("toru tekau maa ono");
+		maoriNumbers.addElement("toru tekau maa whitu");
+		maoriNumbers.addElement("toru tekau maa waru");
+		maoriNumbers.addElement("toru tekau maa iwa");
 		maoriNumbers.addElement("whaa tekau");
-		maoriNumbers.addElement("whaa tekau ma tahi");
-		maoriNumbers.addElement("whaa tekau ma rua");
-		maoriNumbers.addElement("whaa tekau ma toru");
-		maoriNumbers.addElement("whaa tekau ma whaa");
-		maoriNumbers.addElement("whaa tekau ma rima");
-		maoriNumbers.addElement("whaa tekau ma ono");
-		maoriNumbers.addElement("whaa tekau ma whitu");
-		maoriNumbers.addElement("whaa tekau ma waru");
-		maoriNumbers.addElement("whaa tekau ma iwa");
+		maoriNumbers.addElement("whaa tekau maa tahi");
+		maoriNumbers.addElement("whaa tekau maa rua");
+		maoriNumbers.addElement("whaa tekau maa toru");
+		maoriNumbers.addElement("whaa tekau maa whaa");
+		maoriNumbers.addElement("whaa tekau maa rima");
+		maoriNumbers.addElement("whaa tekau maa ono");
+		maoriNumbers.addElement("whaa tekau maa whitu");
+		maoriNumbers.addElement("whaa tekau maa waru");
+		maoriNumbers.addElement("whaa tekau maa iwa");
 		maoriNumbers.addElement("rima tekau");
-		maoriNumbers.addElement("rima tekau ma tahi");
-		maoriNumbers.addElement("rima tekau ma rua");
-		maoriNumbers.addElement("rima tekau ma toru");
-		maoriNumbers.addElement("rima tekau ma whaa");
-		maoriNumbers.addElement("rima tekau ma rima");
-		maoriNumbers.addElement("rima tekau ma ono");
-		maoriNumbers.addElement("rima tekau ma whitu");
-		maoriNumbers.addElement("rima tekau ma waru");
-		maoriNumbers.addElement("rima tekau ma iwa");
+		maoriNumbers.addElement("rima tekau maa tahi");
+		maoriNumbers.addElement("rima tekau maa rua");
+		maoriNumbers.addElement("rima tekau maa toru");
+		maoriNumbers.addElement("rima tekau maa whaa");
+		maoriNumbers.addElement("rima tekau maa rima");
+		maoriNumbers.addElement("rima tekau maa ono");
+		maoriNumbers.addElement("rima tekau maa whitu");
+		maoriNumbers.addElement("rima tekau maa waru");
+		maoriNumbers.addElement("rima tekau maa iwa");
 		maoriNumbers.addElement("ono tekau");
-		maoriNumbers.addElement("ono tekau ma tahi");
-		maoriNumbers.addElement("ono tekau ma rua");
-		maoriNumbers.addElement("ono tekau ma toru");
-		maoriNumbers.addElement("ono tekau ma whaa");
-		maoriNumbers.addElement("ono tekau ma rima");
-		maoriNumbers.addElement("ono tekau ma ono");
-		maoriNumbers.addElement("ono tekau ma whitu");
-		maoriNumbers.addElement("ono tekau ma waru");
-		maoriNumbers.addElement("ono tekau ma iwa");
+		maoriNumbers.addElement("ono tekau maa tahi");
+		maoriNumbers.addElement("ono tekau maa rua");
+		maoriNumbers.addElement("ono tekau maa toru");
+		maoriNumbers.addElement("ono tekau maa whaa");
+		maoriNumbers.addElement("ono tekau maa rima");
+		maoriNumbers.addElement("ono tekau maa ono");
+		maoriNumbers.addElement("ono tekau maa whitu");
+		maoriNumbers.addElement("ono tekau maa waru");
+		maoriNumbers.addElement("ono tekau maa iwa");
 		maoriNumbers.addElement("whitu tekau");
-		maoriNumbers.addElement("whitu tekau ma tahi");
-		maoriNumbers.addElement("whitu tekau ma rua");
-		maoriNumbers.addElement("whitu tekau ma toru");
-		maoriNumbers.addElement("whitu tekau ma whaa");
-		maoriNumbers.addElement("whitu tekau ma rima");
-		maoriNumbers.addElement("whitu tekau ma ono");
-		maoriNumbers.addElement("whitu tekau ma whitu");
-		maoriNumbers.addElement("whitu tekau ma waru");
-		maoriNumbers.addElement("whitu tekau ma iwa");
+		maoriNumbers.addElement("whitu tekau maa tahi");
+		maoriNumbers.addElement("whitu tekau maa rua");
+		maoriNumbers.addElement("whitu tekau maa toru");
+		maoriNumbers.addElement("whitu tekau maa whaa");
+		maoriNumbers.addElement("whitu tekau maa rima");
+		maoriNumbers.addElement("whitu tekau maa ono");
+		maoriNumbers.addElement("whitu tekau maa whitu");
+		maoriNumbers.addElement("whitu tekau maa waru");
+		maoriNumbers.addElement("whitu tekau maa iwa");
 		maoriNumbers.addElement("waru tekau");
-		maoriNumbers.addElement("waru tekau ma tahi");
-		maoriNumbers.addElement("waru tekau ma rua");
-		maoriNumbers.addElement("waru tekau ma toru");
-		maoriNumbers.addElement("waru tekau ma whaa");
-		maoriNumbers.addElement("waru tekau ma rima");
-		maoriNumbers.addElement("waru tekau ma ono");
-		maoriNumbers.addElement("waru tekau ma whitu");
-		maoriNumbers.addElement("waru tekau ma waru");
-		maoriNumbers.addElement("waru tekau ma iwa");
+		maoriNumbers.addElement("waru tekau maa tahi");
+		maoriNumbers.addElement("waru tekau maa rua");
+		maoriNumbers.addElement("waru tekau maa toru");
+		maoriNumbers.addElement("waru tekau maa whaa");
+		maoriNumbers.addElement("waru tekau maa rima");
+		maoriNumbers.addElement("waru tekau maa ono");
+		maoriNumbers.addElement("waru tekau maa whitu");
+		maoriNumbers.addElement("waru tekau maa waru");
+		maoriNumbers.addElement("waru tekau maa iwa");
 		maoriNumbers.addElement("iwa tekau");
-		maoriNumbers.addElement("iwa tekau ma tahi");
-		maoriNumbers.addElement("iwa tekau ma rua");
-		maoriNumbers.addElement("iwa tekau ma toru");
-		maoriNumbers.addElement("iwa tekau ma whaa");
-		maoriNumbers.addElement("iwa tekau ma rima");
-		maoriNumbers.addElement("iwa tekau ma ono");
-		maoriNumbers.addElement("iwa tekau ma whitu");
-		maoriNumbers.addElement("iwa tekau ma waru");
-		maoriNumbers.addElement("iwa tekau ma iwa");
+		maoriNumbers.addElement("iwa tekau maa tahi");
+		maoriNumbers.addElement("iwa tekau maa rua");
+		maoriNumbers.addElement("iwa tekau maa toru");
+		maoriNumbers.addElement("iwa tekau maa whaa");
+		maoriNumbers.addElement("iwa tekau maa rima");
+		maoriNumbers.addElement("iwa tekau maa ono");
+		maoriNumbers.addElement("iwa tekau maa whitu");
+		maoriNumbers.addElement("iwa tekau maa waru");
+		maoriNumbers.addElement("iwa tekau maa iwa");
 	}
 	
 	//adds an element to the easy score vector of the most recent test
@@ -285,10 +277,7 @@ public class TaitaiModel {
 		}
 		
 	}
-
-	//currently function does not wait for process to finish
-	//when i put waitFor() in, the process never finishes...
-
+	
 	//creates a new process that takes a bash command as an input
 	public static void createNewProcess(String command) {
 		try {
@@ -319,10 +308,6 @@ public class TaitaiModel {
 		createNewProcess(command);
 	}
 	
-	public static void removeAudioFile() {
-		String command = "rm -r foo.wav";
-		createNewProcess(command);
-	}
 	
 	public static void main(String[] args) {
 	}
