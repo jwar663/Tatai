@@ -47,9 +47,12 @@ public class TaitaiModel {
 	
 	public static void clearStats() {
 		try {
-			String command = "rm -r mydir";
+			String command = "rm stats/.level1";
 			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
 			Process process = pb.start();
+			command = "rm stats/.level2";
+			pb = new ProcessBuilder("bash", "-c", command);
+			process = pb.start();
 		} catch (Exception f) {
 			f.printStackTrace();
 		}
@@ -303,9 +306,4 @@ public class TaitaiModel {
 		String command = "arecord -d " + time + " -r 22050 -c 1 -i -t wav -f s16_LE foo.wav";
 		createNewProcess(command);
 	}
-	
-	
-	public static void main(String[] args) {
-	}
-
 }
