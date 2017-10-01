@@ -80,7 +80,9 @@ public class QuizView {
 		_listen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-					TaitaiModel.playAudio();	
+					_listen.setText("Playing...");
+					TaitaiModel.playAudio();
+					_listen.setText("Playback");
 			}
 		});
 
@@ -89,11 +91,13 @@ public class QuizView {
 		_record.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				_record.setText("Recording...");
 				if (_level == 1) {
 					TaitaiModel.recordAudio("3");
 				} else {
 					TaitaiModel.recordAudio("5");
 				}
+				_record.setText("Record");
 				TaitaiModel.writeToRecout();
 				_wordSaid = TaitaiModel.readRecoutFile(); // triedd to make this fit but im unable to execute code or anything so dont know if its correct
 				// just trying to read user input from mike
