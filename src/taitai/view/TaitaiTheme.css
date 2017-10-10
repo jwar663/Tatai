@@ -44,6 +44,18 @@
 	-fx-text-fill: #FF9800;
 	-fx-padding: 180 0 50 0;
 }
+.label-questionCounter{
+	-fx-font-size: 22.0pt;
+	-fx-font-family: "Helvetica";
+	-fx-text-fill: #000000;
+	-fx-padding: 180 0 50 0;
+}
+.label-dynamicScore{
+	-fx-font-size: 22.0pt;
+	-fx-font-family: "Helvetica";
+	-fx-text-fill: #000000;
+	-fx-padding: 180 0 50 0;
+}
 .button-menu{
     -fx-background-color: linear-gradient(#311B92, #3949AB);
     -fx-text-fill: #E1F5FE;

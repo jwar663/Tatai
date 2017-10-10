@@ -45,15 +45,18 @@ public class QuizView {
 
 		// setting up elements of gui
 		BorderPane layout;
-		Label question;
+		Label question, questionNumberLabel, dynamicScore;
 		Button toMenu;
-		VBox questionLayout, toMenuLayout, buttonsLayout;
+		VBox questionLayout, toMenuLayout, buttonsLayout, counterLayout;
 
 		layout = new BorderPane();
 		toMenu = new Button("Go Back to Menu");
 		_record = new Button("Record");
 		question = new Label(_number + "");
+		questionNumberLabel = new Label("Question " + _questionNumber);
+		dynamicScore = new Label(_numCorrect + "/" + (_questionNumber - 1));
 
+		counterLayout = new VBox();
 		questionLayout = new VBox();
 		toMenuLayout = new VBox();
 		buttonsLayout = new VBox(20);
@@ -99,8 +102,7 @@ public class QuizView {
 				}
 				_record.setText("Record");
 				TaitaiModel.writeToRecout();
-				_wordSaid = TaitaiModel.readRecoutFile(); // triedd to make this fit but im unable to execute code or anything so dont know if its correct
-				// just trying to read user input from mike
+				_wordSaid = TaitaiModel.readRecoutFile();
 				// wanted to have threads here but its too difficult to implement without being able to run any code
 
 				if (!_isAdded) {
@@ -127,21 +129,31 @@ public class QuizView {
 		toMenu.getStyleClass().add("button-back");
 		_record.getStyleClass().add("button-function");
 		question.getStyleClass().add("label-quiz");
+		dynamicScore.getStyleClass().add("label-dynamicScore");
+		questionNumberLabel.getStyleClass().add("label-questionNumber");
 
+		//added extra labels, need to align them properly.
 		questionLayout.setAlignment(Pos.CENTER);
 		buttonsLayout.setAlignment(Pos.TOP_CENTER);
 		toMenuLayout.setAlignment(Pos.BOTTOM_RIGHT);
+		//counterLayout.setAlignment(Pos.TOP_LEFT);
 
+		
 		buttonsLayout.setPadding(new Insets(10, 0, 20, 0));
 		toMenuLayout.setPadding(new Insets(0, 40, 40, 0));
+		
+		//counterLayout.setSpacing(10);
 
 		buttonsLayout.getChildren().add(_record);
 		questionLayout.getChildren().add(question);
 		toMenuLayout.getChildren().add(toMenu);
+		//counterLayout.getChildren().addAll(questionNumberLabel, dynamicScore);
 
 		layout.setTop(questionLayout);
 		layout.setCenter(buttonsLayout);
 		layout.setBottom(toMenuLayout);
+		//layout.setLeft(counterLayout);
+		
 
 
 		_quiz = new Scene(layout, width, height);
