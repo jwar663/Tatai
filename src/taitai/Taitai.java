@@ -30,27 +30,8 @@ public class Taitai extends Application {
 		TaitaiModel.assignMaoriNumbers();
 
 		//creates folders/files for statistics and questions
-		try {
-			String command;
-			command = "mkdir stats";
-			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
-			Process process = pb.start();
-			command = " >> stats/.level1";
-			pb = new ProcessBuilder("bash", "-c", command);
-			process = pb.start();
-			command = ">> stats/.level2";
-			pb = new ProcessBuilder("bash", "-c", command);
-			process = pb.start();
-			command = "mkdir questions";
-			pb = new ProcessBuilder("bash", "-c", command);
-			process = pb.start();
-			command = " >> questions/.custom";
-			pb = new ProcessBuilder("bash", "-c", command);
-			process = pb.start();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		TaitaiModel.createAllFiles();
+		
 		//initialising the gui
 		MenuView mv = new MenuView();
 		_menu = mv.getMenuView(WIDTH, HEIGHT);

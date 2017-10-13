@@ -39,7 +39,7 @@ public class QuizView {
 	}
 
 	/*
-	 * gets everthing for appropriate gui
+	 * gets everything for appropriate gui
 	 */
 	public Scene getQuizView(int width, int height) {
 

@@ -310,17 +310,21 @@ public class TaitaiModel {
 	
 	//checks what sort of error or what the answer to the expression is
 	//need to implement adding the equation.
-	public static void checkExpression(String expression) {
+	//needs to be moved to the class that handles creating custom questions
+	public static void checkExpression(String expression, String questionType) {
 		String message = computeExpression(expression);
 		if(message.equals("error bash")) {
 			System.out.println("you provided an invalid expression");
 			//add pop-up error box
+			//_promptb.displayBox("You provided an invalid expression");
 		} else if(message.equals("error bounds")) {
 			System.out.println("your expression equates to more than 99 or less than 1");
 			//add pop-up error box
+			//_promptb.displayBox("Your expression equates to more than 99 or less than 1");
 		} else {
 			System.out.println(message);
-			saveNewQuestion(expression);
+			TaitaiModel.saveQuestion(expression, questionType);
+			//_promptb.displayBox("Success: Your question has now been added!");
 		}
 	}
 	
@@ -343,17 +347,40 @@ public class TaitaiModel {
 		}
 	}
 	
-	//save new custom question
-	public static void saveNewQuestion(String expression) {
+	//save question
+	public static void saveQuestion(String expression, String questionType) {
 		try {
 				String command;
-					command = "echo " + expression + " >> questions/.custom";
+				command = "echo " + expression + " >> questions/." + questionType;
 				ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
-				Process process = pb.start();
+				pb.start();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
+	}
+	
+	//creates a file/folder using process builder
+	public static void createFile(String command) {
+		try {
+			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
+			pb.start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//creates all necessary files/folders
+	public static void createAllFiles() {
+		createFile("mkdir stats");
+		createFile(" >> stats/.level1");
+		createFile(" >> stats/.level2");
+		createFile("mkdir questions");
+		createFile(" >> questions/.custom");
+		createFile(" >> questions/.numbers");
+		createFile(" >> questions/.addition_subtraction");
+		createFile(" >> questions/.multiplication_division");
+		createFile(" >> questions/.combination");
 	}
 }
 
