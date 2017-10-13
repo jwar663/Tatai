@@ -310,20 +310,50 @@ public class TaitaiModel {
 	
 	//checks what sort of error or what the answer to the expression is
 	//need to implement adding the equation.
-	public static int checkExpression(String expression) {
+	public static void checkExpression(String expression) {
 		String message = computeExpression(expression);
 		if(message.equals("error bash")) {
-			System.out.println(message);
-			return -1;
+			System.out.println("you provided an invalid expression");
+			//add pop-up error box
 		} else if(message.equals("error bounds")) {
-			System.out.println(message);
-			return -2;
+			System.out.println("your expression equates to more than 99 or less than 1");
+			//add pop-up error box
 		} else {
 			System.out.println(message);
-			//write to file here.
-			return Integer.parseInt(message);
-			
+			saveNewQuestion(expression);
 		}
+	}
+	
+	//find an answer to your expression when you know it wont cause an error
+	public static int findAnswerToExpression(String expression) {
+		try {
+			String command = "echo $((" + expression + "))";
+			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
+			Process process = pb.start();
+			BufferedReader stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			BufferedReader stderr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+			String lineOut = stdout.readLine();
+			String lineErr = stderr.readLine();
+			process.waitFor();
+			int answerInt = Integer.parseInt(lineOut);
+			return answerInt;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	//save new custom question
+	public static void saveNewQuestion(String expression) {
+		try {
+				String command;
+					command = "echo " + expression + " >> questions/.custom";
+				ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
+				Process process = pb.start();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 	}
 }
 

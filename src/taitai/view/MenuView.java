@@ -19,6 +19,7 @@ import javafx.scene.text.*;
  */
 public class MenuView {
 	
+	private ErrorBox _eb = new ErrorBox();
 	private Scene _menu;
 	Button _level1, _level2, _stats;
 	
@@ -45,6 +46,8 @@ public class MenuView {
 		_stats.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				//testing error box
+				//_eb.displayBox("sfjashfbhadfksdavbkdsahbvksvsadjkdvb");
 				StatsView sv = new StatsView();
 				Taitai.changeScene(sv.getStatsView(width, height));
 			}
