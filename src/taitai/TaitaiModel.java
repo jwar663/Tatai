@@ -273,4 +273,58 @@ public class TaitaiModel {
 		String command = "arecord -d " + time + " -r 22050 -c 1 -i -t wav -f s16_LE foo.wav";
 		createNewProcess(command);
 	}
+	
+	//user inputs an expression as a string and completes a bash 
+	//command to find out the mathematical answer
+	public static String computeExpression(String expression) {
+		try {
+			String AnswerOrError;
+			String command = "echo $((" + expression + "))";
+			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
+			Process process = pb.start();
+			BufferedReader stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			BufferedReader stderr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+			String lineOut = stdout.readLine();
+			String lineErr = stderr.readLine();
+			process.waitFor();
+			if(lineOut == null) {
+				AnswerOrError = "error bash";
+			} else {
+				int answerInt = Integer.parseInt(lineOut);
+				if((answerInt <= 99) && (answerInt > 0)) {
+					AnswerOrError = lineOut;
+				} else {
+					AnswerOrError = "error bounds";
+				}
+				
+			}
+//			System.out.println(lineOut);
+//			System.out.println(lineErr);
+			
+			return AnswerOrError;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	//checks what sort of error or what the answer to the expression is
+	//need to implement adding the equation.
+	public static int checkExpression(String expression) {
+		String message = computeExpression(expression);
+		if(message.equals("error bash")) {
+			System.out.println(message);
+			return -1;
+		} else if(message.equals("error bounds")) {
+			System.out.println(message);
+			return -2;
+		} else {
+			System.out.println(message);
+			//write to file here.
+			return Integer.parseInt(message);
+			
+		}
+	}
 }
+
+
