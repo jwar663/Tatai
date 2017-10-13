@@ -29,7 +29,7 @@ public class Taitai extends Application {
 		//initialises maoriNumbers vector.
 		TaitaiModel.assignMaoriNumbers();
 
-		//creates folders/files for statistics
+		//creates folders/files for statistics and questions
 		try {
 			String command;
 			command = "mkdir stats";
@@ -41,6 +41,12 @@ public class Taitai extends Application {
 			command = ">> stats/.level2";
 			pb = new ProcessBuilder("bash", "-c", command);
 			process = pb.start();
+			command = "mkdir questions";
+			pb = new ProcessBuilder("bash", "-c", command);
+			process = pb.start();
+			command = " >> questions/.custom";
+			pb = new ProcessBuilder("bash", "-c", command);
+			process = pb.start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -50,7 +56,7 @@ public class Taitai extends Application {
 		_menu = mv.getMenuView(WIDTH, HEIGHT);
 
 		_window = primaryStage;
-		_window.setTitle("Tatai");
+		_window.setTitle("Tātai");
 		_window.setScene(_menu);
 		_window.centerOnScreen();
 		_window.setResizable(false);

@@ -19,7 +19,7 @@ import javafx.scene.text.*;
  */
 public class MenuView {
 	
-	private ErrorBox _eb = new ErrorBox();
+	//private ErrorBox _eb = new ErrorBox();
 	private Scene _menu;
 	Button _level1, _level2, _stats;
 	
@@ -29,7 +29,7 @@ public class MenuView {
 		
 		BorderPane layout;
 		VBox buttonLayout, titleLayout;
-		welcome = new Label("Welcome to Tatai!");
+		welcome = new Label("Welcome to Tātai!");
 		_level1 = new Button("Practice Numbers 1-9");
 		_level2 = new Button("Practice Numbers 1-99");
 		_stats = new Button("View Statistics");

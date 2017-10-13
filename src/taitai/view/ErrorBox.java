@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.geometry.*;
 
 /**
- * Confirmation box for action
+ * Error box for notifying users of errors before continuing.
  * @author Matthew Taylor, Jaedyn Ward
  */
 
