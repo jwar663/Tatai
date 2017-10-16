@@ -15,6 +15,9 @@ import java.util.Vector;
 public class TaitaiModel {
 	
 	public static Vector<String> maoriNumbers = new Vector<String>(0,1);
+	public static Vector<String> addSubQuestions = new Vector<String>(0,1);
+	public static Vector<String> multDivQuestions = new Vector<String>(0,1);
+	public static Vector<String> customQuestions = new Vector<String>(0,1);
 	
 	//saves the stats to the file corresponding to the level
 	public static void saveStats(int numCorrect, int level) {
@@ -97,6 +100,131 @@ public class TaitaiModel {
 	public static String getWordRequired(int number) {
 		return maoriNumbers.get(number);
 	}
+	
+	//reads from custom questions file and assigns values to the vector.
+	public static void assignCustomQuestions() {
+		try {
+			customQuestions.clear();
+			BufferedReader br = new BufferedReader(new FileReader("questions/.custom"));
+			String line;
+			while ((line = br.readLine()) != null) {
+				customQuestions.addElement(line);
+			}
+			br.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//assigns addition/subtraction and multiplication/division questions
+	//to their respective vectors
+	public static void assignRegularQuestions() {
+		addSubQuestions.clear();
+		multDivQuestions.clear();
+		
+		addSubQuestions.addElement("2 + 2 - 1");
+		addSubQuestions.addElement("76 + 22 - 64");
+		addSubQuestions.addElement("69 + 22 - 25");
+		addSubQuestions.addElement("85 + 10 - 42");
+		addSubQuestions.addElement("2 + 92 - 40");
+		addSubQuestions.addElement("1 + 32 - 15");
+		addSubQuestions.addElement("59 + 32 - 34");
+		addSubQuestions.addElement("79 + 17 - 14");
+		addSubQuestions.addElement("83 + 5 - 36");
+		addSubQuestions.addElement("93 + 6 - 45");
+		addSubQuestions.addElement("87 + 5 - 32");
+		addSubQuestions.addElement("85 + 6 - 15");
+		addSubQuestions.addElement("74 + 24 - 61");
+		addSubQuestions.addElement("9 + 22 - 10");
+		addSubQuestions.addElement("38 + 41 - 21");
+		addSubQuestions.addElement("87 + 2 - 74");
+		addSubQuestions.addElement("28 + 13 - 19");
+		addSubQuestions.addElement("65 + 18 - 32");
+		addSubQuestions.addElement("49 + 22 - 31");
+		addSubQuestions.addElement("8 + 50 - 21");
+		addSubQuestions.addElement("53 + 10 - 60");
+		addSubQuestions.addElement("37 + 33 - 16");
+		addSubQuestions.addElement("94 + 2 - 67");
+		addSubQuestions.addElement("5 + 8 - 4");
+		addSubQuestions.addElement("45 + 45 - 62");
+		addSubQuestions.addElement("27 + 11 - 26");
+		addSubQuestions.addElement("54 + 36 - 80");
+		addSubQuestions.addElement("14 + 41 - 45");
+		addSubQuestions.addElement("66 + 22 - 77");
+		addSubQuestions.addElement("49 + 6 - 50");
+		addSubQuestions.addElement("90 + 5 - 88");
+		addSubQuestions.addElement("79 + 20 - 1");
+		addSubQuestions.addElement("3 + 56 - 39");
+		addSubQuestions.addElement("18 + 17 - 32");
+		addSubQuestions.addElement("78 + 5 - 67");
+		addSubQuestions.addElement("89 + 6 - 21");
+		addSubQuestions.addElement("76 + 4 - 30");
+		addSubQuestions.addElement("15 + 25 - 10");
+		addSubQuestions.addElement("38 + 40 - 64");
+		addSubQuestions.addElement("81 + 13 - 90");
+		addSubQuestions.addElement("65 + 18 - 70");
+		addSubQuestions.addElement("10 + 17 - 6");
+		addSubQuestions.addElement("19 + 62 - 47");
+		addSubQuestions.addElement("98 + 1 - 93");
+		addSubQuestions.addElement("52 + 19 - 69");
+		addSubQuestions.addElement("43 + 50 - 3");
+		addSubQuestions.addElement("54 + 34 - 80");
+		addSubQuestions.addElement("1 + 46 - 32");
+		addSubQuestions.addElement("60 + 29 - 71");
+		addSubQuestions.addElement("23 + 28 - 50");
+		
+		multDivQuestions.addElement("(15 * 5)/ 75");
+		multDivQuestions.addElement("(10 * 6)/ 5");
+		multDivQuestions.addElement("(20 * 4)/ 10");
+		multDivQuestions.addElement("(3 * 4)/ 2");
+		multDivQuestions.addElement("(44 * 2)/ 11");
+		multDivQuestions.addElement("(32 * 3)/ 4");
+		multDivQuestions.addElement("(24 * 1)/ 6");
+		multDivQuestions.addElement("(5 * 18)/ 9");
+		multDivQuestions.addElement("(7 * 8)/ 2");
+		multDivQuestions.addElement("(16 * 3)/ 12");
+		multDivQuestions.addElement("(9 * 6)/ 2");
+		multDivQuestions.)addElement("(10 * 8)/ 20");
+		multDivQuestions.addElement("(70 * 1)/ 35");
+		multDivQuestions.addElement("(40 * 2)/ 80");
+		multDivQuestions.addElement("(2 * 8)/ 4");
+		multDivQuestions.addElement("(7 * 6)/ 21");
+		multDivQuestions.addElement("(10 * 5)/ 2");
+		multDivQuestions.addElement("(16 * 4)/ 32");
+		multDivQuestions.addElement("(5 * 16)/ 4");
+		multDivQuestions.addElement("(14 * 6)/ 21");
+		multDivQuestions.addElement("(63 / 9)* 14");
+		multDivQuestions.addElement("(90 / 10)* 3");
+		multDivQuestions.addElement("(70 / 35)* 19");
+		multDivQuestions.addElement("(4 / 4)* 99");
+		multDivQuestions.addElement("(68 / 4)* 5");
+		multDivQuestions.addElement("(12 / 3)* 21");
+		multDivQuestions.addElement("(88 / 8)* 6");
+		multDivQuestions.addElement("(35 / 7)* 17");
+		multDivQuestions.addElement("(39 / 13)* 24");
+		multDivQuestions.addElement("(49 / 7)* 15");
+		multDivQuestions.addElement("(72 / 9)* 12");
+		multDivQuestions.addElement("(40 / 4)* 7");
+		multDivQuestions.addElement("(75 / 15)* 12");
+		multDivQuestions.addElement("(84 / 4)* 3");
+		multDivQuestions.addElement("(90 / 10)* 2");
+		multDivQuestions.addElement("(22 / 2)* 8");
+		multDivQuestions.addElement("(64 / 16)* 2");
+		multDivQuestions.addElement("(15 / 5)* 24");
+		multDivQuestions.addElement("( / )* ");
+		multDivQuestions.addElement("( / )* ");
+		multDivQuestions.addElement("( / )* ");
+		multDivQuestions.addElement("( / )* ");
+		multDivQuestions.addElement("( / )* ");
+		multDivQuestions.addElement("( / )* ");
+		multDivQuestions.addElement("( / )* ");
+		multDivQuestions.addElement("( / )* ");
+		multDivQuestions.addElement("( / )* ");
+		multDivQuestions.addElement("( / )* ");
+		multDivQuestions.addElement("( / )* ");
+		multDivQuestions.addElement("( / )* ");
+		
+		}
 	
 	//Assigns all of the numbers in maori to their corresponding position in a vector
 	public static void assignMaoriNumbers() {
@@ -251,6 +379,7 @@ public class TaitaiModel {
 			Process process = pb.start();
 			BufferedReader stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			process.waitFor();
+			stdout.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -287,6 +416,8 @@ public class TaitaiModel {
 			String lineOut = stdout.readLine();
 			String lineErr = stderr.readLine();
 			process.waitFor();
+			stdout.close();
+			stderr.close();
 			if(lineOut == null) {
 				AnswerOrError = "error bash";
 			} else {
@@ -339,6 +470,8 @@ public class TaitaiModel {
 			String lineOut = stdout.readLine();
 			String lineErr = stderr.readLine();
 			process.waitFor();
+			stdout.close();
+			stderr.close();
 			int answerInt = Integer.parseInt(lineOut);
 			return answerInt;
 		} catch(Exception e) {
@@ -377,10 +510,10 @@ public class TaitaiModel {
 		createFile(" >> stats/.level2");
 		createFile("mkdir questions");
 		createFile(" >> questions/.custom");
-		createFile(" >> questions/.numbers");
-		createFile(" >> questions/.addition_subtraction");
-		createFile(" >> questions/.multiplication_division");
-		createFile(" >> questions/.combination");
+//		createFile(" >> questions/.numbers");
+//		createFile(" >> questions/.addition_subtraction");
+//		createFile(" >> questions/.multiplication_division");
+//		createFile(" >> questions/.combination");
 	}
 }
 
