@@ -7,7 +7,13 @@
 	-fx-font-size: 50.0pt;
 	-fx-font-family: "Helvetica";
 	-fx-text-fill: #5D4037;
-	-fx-padding: 100, 0, 0, 0;
+	-fx-padding: 60, 0, 0, 0;
+}
+.label-menulabel{
+	-fx-font-size: 25.0pt;
+	-fx-font-family: "Helvetica";
+	-fx-text-fill: #5D4037;
+	-fx-padding: 60, 0, 0, 0;
 }
 .label-quiz{
 	-fx-font-size: 70.0pt;
@@ -62,7 +68,7 @@
     -fx-font-size: 20.0pt;
     -fx-background-radius: 2;
     -fx-pref-width: 400;
-    -fx-pref-height: 60;
+    -fx-pref-height: 55;
 
 }
 .button-back{
