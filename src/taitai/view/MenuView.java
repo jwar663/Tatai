@@ -49,10 +49,10 @@ public class MenuView {
 		
 		layout = new BorderPane();
 		titleLayout = new VBox();
-		buttonLayout = new VBox(40);
+		buttonLayout = new VBox(25);
 		toMenuLayout = new VBox();
 		
-		questionType.getStyleClass().add("label-welcome");
+		questionType.getStyleClass().add("label-menulabel");
 		_level1.getStyleClass().add("button-menu");
 		_level2.getStyleClass().add("button-menu");
 		_level3.getStyleClass().add("button-menu");
