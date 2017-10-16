@@ -223,18 +223,18 @@ public class TaitaiModel {
 		multDivQuestions.addElement("(22 / 2)* 8");
 		multDivQuestions.addElement("(64 / 16)* 2");
 		multDivQuestions.addElement("(15 / 5)* 24");
-		multDivQuestions.addElement("( / )* ");
-		multDivQuestions.addElement("( / )* ");
-		multDivQuestions.addElement("( / )* ");
-		multDivQuestions.addElement("( / )* ");
-		multDivQuestions.addElement("( / )* ");
-		multDivQuestions.addElement("( / )* ");
-		multDivQuestions.addElement("( / )* ");
-		multDivQuestions.addElement("( / )* ");
-		multDivQuestions.addElement("( / )* ");
-		multDivQuestions.addElement("( / )* ");
-		multDivQuestions.addElement("( / )* ");
-		multDivQuestions.addElement("( / )* ");
+		multDivQuestions.addElement("(26 / 2)* 7");
+		multDivQuestions.addElement("(36 / 4)* 5");
+		multDivQuestions.addElement("(65 / 5)* 2");
+		multDivQuestions.addElement("(70 / 10)* 3");
+		multDivQuestions.addElement("(72 / 9)* 6");
+		multDivQuestions.addElement("(9 / 3)* 27");
+		multDivQuestions.addElement("(24 / 4)* 6");
+		multDivQuestions.addElement("(96 / 8)* 7");
+		multDivQuestions.addElement("(27 / 3)* 9");
+		multDivQuestions.addElement("(69 / 3)* 4");
+		multDivQuestions.addElement("(1 / 1)* 67");
+		multDivQuestions.addElement("(78 / 78)* 7");
 		
 		}
 	
