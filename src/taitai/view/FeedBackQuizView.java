@@ -15,23 +15,23 @@ import javafx.scene.control.*;
  * The feedback scene for the GUI
  * @author Matthew Taylor, Jaedyn Ward
  */
-public class FeedBackView {
+public class FeedBackQuizView {
 
 	private Scene _feedback;
 	private boolean _firstTry, _correct, _last;
-	int _number, _questionNumber, _width, _height, _level, _numCorrect;
-	String _incorrect;
+	int _questionNumber, _width, _height, _level, _numCorrect;
+	String _incorrect, _expression;
 	
 	/*
 	 * constructor
 	 */
-	public FeedBackView(boolean firstTry, int questionNumber, int level, int numCorrect, boolean correct, int number) {
+	public FeedBackQuizView(boolean firstTry, int questionNumber, int level, int numCorrect, boolean correct, String expression) {
 		_correct = correct; 
 		_firstTry = firstTry; 
 		_questionNumber = questionNumber;
 		_level = level;
 		_numCorrect = numCorrect;
-		_number = number;
+		_expression = expression;
 		
 		if (_questionNumber == 10) {
 			_last = true;
@@ -101,7 +101,7 @@ public class FeedBackView {
 					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
 					Taitai.changeScene(qv.getQuizView(_width, _height));
 				} else if (_firstTry && !_correct) {
-					QuizView qv = new QuizView(false, _questionNumber, _level, _numCorrect, _number);
+					QuizView qv = new QuizView(false, _questionNumber, _level, _numCorrect, _expression);
 					Taitai.changeScene(qv.getQuizView(_width, _height));
 				} else if (_last) {
 					TaitaiModel.saveStats(_numCorrect, _level);
@@ -122,8 +122,8 @@ public class FeedBackView {
 		toMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				MenuView sv = new MenuView();
-				Taitai.changeScene(sv.getMenuView(width, height));
+				MainMenuView sv = new MainMenuView();
+				Taitai.changeScene(sv.getMainMenuView(width, height));
 			}
 		});
 		

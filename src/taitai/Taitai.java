@@ -7,7 +7,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import taitai.view.MenuView;
+import taitai.view.MainMenuView;
 
 /**
  * Taitai Maori number pronounciation practiser
@@ -20,7 +20,7 @@ public class Taitai extends Application {
 	private final static int WIDTH = 850;
 
 	private static Stage _window;
-	private Scene _menu;
+	private Scene _mainMenu;
 	
 
 	@Override
@@ -28,17 +28,19 @@ public class Taitai extends Application {
 		
 		//initialises maoriNumbers vector.
 		TaitaiModel.assignMaoriNumbers();
+		TaitaiModel.assignRegularQuestions();
+		TaitaiModel.assignCustomQuestions();
 
 		//creates folders/files for statistics and questions
 		TaitaiModel.createAllFiles();
 		
 		//initialising the gui
-		MenuView mv = new MenuView();
-		_menu = mv.getMenuView(WIDTH, HEIGHT);
+		MainMenuView mv = new MainMenuView();
+		_mainMenu = mv.getMainMenuView(WIDTH, HEIGHT);
 
 		_window = primaryStage;
 		_window.setTitle("Tātai");
-		_window.setScene(_menu);
+		_window.setScene(_mainMenu);
 		_window.centerOnScreen();
 		_window.setResizable(false);
 		_window.show();

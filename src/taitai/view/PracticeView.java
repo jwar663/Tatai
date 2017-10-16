@@ -1,4 +1,3 @@
-
 package taitai.view;
 
 import javafx.event.ActionEvent;
@@ -14,23 +13,22 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 
 /**
- * Quiz view Gui
+ * Practice View for Gui
  * @author Matthew Taylor, Jaedyn Ward
  */
-public class QuizView {
+public class PracticeView {
 
-	private Scene _quiz;
+	private Scene _practice;
 	private int _questionNumber, _level, _numCorrect;
-	private boolean _clickedRecord, _firstTry, _correct, _isAdded;
+	private boolean _clickedRecord, _correct, _isAdded;
 	private Button _record, _listen, _submit;
 	private String _wordSaid, _expression;
 
 	/*
 	 * constructor
 	 */
-	public QuizView(boolean firstTry, int questionNumber, int level, int numCorrect, String expression) {
+	public PracticeView(int questionNumber, int level, int numCorrect, String expression) {
 		_questionNumber = questionNumber;
-		_firstTry = firstTry;
 		_clickedRecord = false;
 		_level = level;
 		_numCorrect = numCorrect;
@@ -41,7 +39,7 @@ public class QuizView {
 	/*
 	 * gets everything for appropriate gui
 	 */
-	public Scene getQuizView(int width, int height) {
+	public Scene getPracticeView(int width, int height) {
 
 		// setting up elements of gui
 		BorderPane layout;
@@ -74,8 +72,8 @@ public class QuizView {
 					} else {
 						_correct = false;
 					}
-					FeedBackQuizView fbv = new FeedBackQuizView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _expression);
-					Taitai.changeScene(fbv.getFeedBackView(width, height));
+					FeedBackPracticeView fbv = new FeedBackPracticeView(_questionNumber, _level, _numCorrect, _correct, _expression);
+					Taitai.changeScene(fbv.getFeedBackPracticeView(width, height));
 			}
 		});
 		
@@ -156,9 +154,9 @@ public class QuizView {
 		
 
 
-		_quiz = new Scene(layout, width, height);
-		_quiz.getStylesheets().add("taitai/view/TaitaiTheme.css");
-		return _quiz;
+		_practice = new Scene(layout, width, height);
+		_practice.getStylesheets().add("taitai/view/TaitaiTheme.css");
+		return _practice;
 
 	}
 

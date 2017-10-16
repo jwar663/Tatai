@@ -53,8 +53,8 @@ public class StatsView {
 		toMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				MenuView sv = new MenuView();
-				Taitai.changeScene(sv.getMenuView(width, height));
+				MainMenuView sv = new MainMenuView();
+				Taitai.changeScene(sv.getMainMenuView(width, height));
 			}
 		});
 
@@ -65,8 +65,8 @@ public class StatsView {
 				confirmation = _cb.displayBox("Clear Statistics", "   Are you sure you wish to clear all your statistics?   ");
 				if (confirmation) {
 					TaitaiModel.clearStats();
-					MenuView sv = new MenuView();
-					Taitai.changeScene(sv.getMenuView(width, height));
+					MainMenuView sv = new MainMenuView();
+					Taitai.changeScene(sv.getMainMenuView(width, height));
 				}
 			}
 		});

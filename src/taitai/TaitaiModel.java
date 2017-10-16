@@ -86,19 +86,31 @@ public class TaitaiModel {
 	}
 
 	//starts the test, by finding a random number that corresponds to the level
-	public static int startTest(int level) {
-		int testNumber;
+	public static String startTest(int level) {
+		String testExpression;
+		int elementsInCustom = 0;
 		if (level == 1) {
-			testNumber = randomInt(1,9);
+			testExpression = Integer.toString(randomInt(1,99));
+		} else if (level == 2) {
+			testExpression = addSubQuestions.get(randomInt(0,49));
+		} else if (level == 3) {
+			testExpression = multDivQuestions.get(randomInt(0,49));
+		} else if (level == 4) {
+			if(randomInt(1,2) == 1) {
+				testExpression = addSubQuestions.get(randomInt(0,49));
+			} else {
+				testExpression = multDivQuestions.get(randomInt(0,49));
+			}		
 		} else {
-			testNumber = randomInt(1,99);
+			elementsInCustom = customQuestions.size();
+			testExpression = customQuestions.get(elementsInCustom);
 		}
-		return testNumber;
+		return testExpression;
 	}
 	
 	//returns the word from the maori dictionary that corresponds to the number
-	public static String getWordRequired(int number) {
-		return maoriNumbers.get(number);
+	public static String getWordRequired(String expression) {
+		return maoriNumbers.get(findAnswerToExpression(expression));
 	}
 	
 	//reads from custom questions file and assigns values to the vector.
@@ -184,7 +196,7 @@ public class TaitaiModel {
 		multDivQuestions.addElement("(7 * 8)/ 2");
 		multDivQuestions.addElement("(16 * 3)/ 12");
 		multDivQuestions.addElement("(9 * 6)/ 2");
-		multDivQuestions.)addElement("(10 * 8)/ 20");
+		multDivQuestions.addElement("(10 * 8)/ 20");
 		multDivQuestions.addElement("(70 * 1)/ 35");
 		multDivQuestions.addElement("(40 * 2)/ 80");
 		multDivQuestions.addElement("(2 * 8)/ 4");
@@ -454,6 +466,7 @@ public class TaitaiModel {
 			//_promptb.displayBox("Your expression equates to more than 99 or less than 1");
 		} else {
 			System.out.println(message);
+			TaitaiModel.customQuestions.addElement(expression);
 			TaitaiModel.saveQuestion(expression, questionType);
 			//_promptb.displayBox("Success: Your question has now been added!");
 		}

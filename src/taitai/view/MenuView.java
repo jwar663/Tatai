@@ -21,63 +21,139 @@ public class MenuView {
 	
 	//private ErrorBox _eb = new ErrorBox();
 	private Scene _menu;
-	Button _level1, _level2, _stats;
+	Button _level1, _level2, _level3, _level4, _level5;
+	int _mode;
+	
+	/*
+	 * constructor
+	 */
+	public MenuView(int mode) {
+		_mode = mode;
+	}
 	
 	public Scene getMenuView(int width, int height) {
 		
-		Label welcome;
+		Label questionType;
+		Button toMenu;
 		
 		BorderPane layout;
-		VBox buttonLayout, titleLayout;
-		welcome = new Label("Welcome to Tātai!");
-		_level1 = new Button("Practice Numbers 1-9");
-		_level2 = new Button("Practice Numbers 1-99");
-		_stats = new Button("View Statistics");
+		VBox buttonLayout, titleLayout, toMenuLayout;
+		
+		questionType = new Label("Please choose the type of questions.");
+		_level1 = new Button("Numbers 1-99");
+		_level2 = new Button("Addition and Subtraction");
+		_level3 = new Button("Multiplication and Division");
+		_level4 = new Button("Combination");
+		_level5 = new Button("Custom");
+		toMenu = new Button("Go Back to Menu");
+		
 		layout = new BorderPane();
 		titleLayout = new VBox();
 		buttonLayout = new VBox(40);
+		toMenuLayout = new VBox();
 		
-		welcome.getStyleClass().add("label-welcome");
+		questionType.getStyleClass().add("label-welcome");
 		_level1.getStyleClass().add("button-menu");
 		_level2.getStyleClass().add("button-menu");
-		_stats.getStyleClass().add("button-menu");
+		_level3.getStyleClass().add("button-menu");
+		_level4.getStyleClass().add("button-menu");
+		_level5.getStyleClass().add("button-menu");
+		toMenu.getStyleClass().add("button-back");
 		
-		// goes to stats view
-		_stats.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				//testing error box
-				//_eb.displayBox("sfjashfbhadfksdavbkdsahbvksvsadjkdvb");
-				StatsView sv = new StatsView();
-				Taitai.changeScene(sv.getStatsView(width, height));
-			}
-		});
-		// button event goes to level 1 quiz
-		_level1.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				QuizView qv = new QuizView(true, 1, 1, 0, TaitaiModel.startTest(1));
-				Taitai.changeScene(qv.getQuizView(width, height));
-			}
-		});
+		// button event goes to level 2 quiz
+				_level1.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						if(_mode == 1) {
+							PracticeView qv = new PracticeView(1, 1, 0, TaitaiModel.startTest(1));
+							Taitai.changeScene(qv.getPracticeView(width, height));
+						} else {
+							QuizView qv = new QuizView(true, 1, 1, 0, TaitaiModel.startTest(1));
+							Taitai.changeScene(qv.getQuizView(width, height));
+						}
+					}
+				});
 		// button event goes to level 2 quiz
 		_level2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				QuizView qv = new QuizView(true, 1, 2, 0, TaitaiModel.startTest(2));
-				Taitai.changeScene(qv.getQuizView(width, height));
+				if(_mode == 1) {
+					PracticeView qv = new PracticeView(1, 2, 0, TaitaiModel.startTest(2));
+					Taitai.changeScene(qv.getPracticeView(width, height));
+				} else {
+					QuizView qv = new QuizView(true, 1, 2, 0, TaitaiModel.startTest(2));
+					Taitai.changeScene(qv.getQuizView(width, height));
+				}
 			}
 		});
 		
+		// button event goes to level 2 quiz
+				_level3.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						if(_mode == 1) {
+							PracticeView qv = new PracticeView(1, 3, 0, TaitaiModel.startTest(3));
+							Taitai.changeScene(qv.getPracticeView(width, height));
+						} else {
+							QuizView qv = new QuizView(true, 1, 3, 0, TaitaiModel.startTest(3));
+							Taitai.changeScene(qv.getQuizView(width, height));
+						}
+					}
+				});
+				
+				// button event goes to level 2 quiz
+				_level4.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						if(_mode == 1) {
+							PracticeView qv = new PracticeView(1, 4, 0, TaitaiModel.startTest(4));
+							Taitai.changeScene(qv.getPracticeView(width, height));
+						} else {
+							QuizView qv = new QuizView(true, 1, 4, 0, TaitaiModel.startTest(4));
+							Taitai.changeScene(qv.getQuizView(width, height));
+						}
+					}
+				});
+				
+				// button event goes to level 2 quiz
+				_level5.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						if(_mode == 1) {
+							PracticeView qv = new PracticeView(1, 5, 0, TaitaiModel.startTest(5));
+							Taitai.changeScene(qv.getPracticeView(width, height));
+						} else {
+							QuizView qv = new QuizView(true, 1, 5, 0, TaitaiModel.startTest(5));
+							Taitai.changeScene(qv.getQuizView(width, height));
+						}
+					}
+				});
+				
+				// to menu button
+				toMenu.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						MainMenuView sv = new MainMenuView();
+						Taitai.changeScene(sv.getMainMenuView(width, height));
+					}
+				});
+		
+		
 		buttonLayout.setAlignment(Pos.TOP_CENTER);
 		titleLayout.setAlignment(Pos.CENTER);
+		toMenuLayout.setAlignment(Pos.BOTTOM_RIGHT);
 		
 		buttonLayout.setPadding(new Insets(0, 0, 20, 0));
+		toMenuLayout.setPadding(new Insets(0, 40, 40, 0));
 		
-		titleLayout.getChildren().add(welcome);
-		buttonLayout.getChildren().addAll(_level1, _level2, _stats);
+		titleLayout.getChildren().add(questionType);
+		buttonLayout.getChildren().addAll(_level1, _level2, _level3, _level4, _level5);
+		toMenuLayout.getChildren().add(toMenu);
+		
 		layout.setTop(titleLayout);
 		layout.setCenter(buttonLayout);
+		layout.setBottom(toMenuLayout);
+		
 		
 		_menu = new Scene(layout, width, height);
 		_menu.getStylesheets().add("taitai/view/TaitaiTheme.css");
