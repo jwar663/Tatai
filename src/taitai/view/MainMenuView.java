@@ -21,7 +21,8 @@ public class MainMenuView {
 	
 	//private ErrorBox _eb = new ErrorBox();
 	private Scene _mainMenu;
-	Button _practice, _quiz, _stats, _custom;
+	Button _practice, _quiz, _stats, _custom, _about;
+	private static PromptBox _pb = new PromptBox();
 	
 	public Scene getMainMenuView(int width, int height) {
 		
@@ -34,6 +35,7 @@ public class MainMenuView {
 		_quiz = new Button("Quiz Mode");
 		_stats = new Button("View Statistics");
 		_custom = new Button("Create Custom Questions");
+		_about = new Button("About Tātai");
 		layout = new BorderPane();
 		titleLayout = new VBox();
 		buttonLayout = new VBox(40);
@@ -43,6 +45,7 @@ public class MainMenuView {
 		_quiz.getStyleClass().add("button-menu");
 		_stats.getStyleClass().add("button-menu");
 		_custom.getStyleClass().add("button-menu");
+		_about.getStyleClass().add("button-menu");
 		
 		// goes to stats view
 		_stats.setOnAction(new EventHandler<ActionEvent>() {
@@ -54,6 +57,15 @@ public class MainMenuView {
 				Taitai.changeScene(sv.getStatsView(width, height));
 			}
 		});
+		
+		// goes to an about confirm box
+		_about.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				_pb.displayBox("About Tātai", "Finish this...");
+			}
+		});
+		
 		// button event goes to practice
 		_practice.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
