@@ -75,8 +75,8 @@ public class MainMenuView {
 					@Override
 					public void handle(ActionEvent event) {
 						//create new custom question class
-//						MenuView mv = new MenuView(2);
-//						Taitai.changeScene(mv.getMenuView(width, height));
+					AddCustomQuestionView cqv = new AddCustomQuestionView();
+						Taitai.changeScene(cqv.getAddCustomQuestionView(width, height));
 					}
 				});
 		

@@ -451,26 +451,7 @@ public class TaitaiModel {
 		}
 	}
 	
-	//checks what sort of error or what the answer to the expression is
-	//need to implement adding the equation.
-	//needs to be moved to the class that handles creating custom questions
-	public static void checkExpression(String expression, String questionType) {
-		String message = computeExpression(expression);
-		if(message.equals("error bash")) {
-			System.out.println("you provided an invalid expression");
-			//add pop-up error box
-			//_promptb.displayBox("You provided an invalid expression");
-		} else if(message.equals("error bounds")) {
-			System.out.println("your expression equates to more than 99 or less than 1");
-			//add pop-up error box
-			//_promptb.displayBox("Your expression equates to more than 99 or less than 1");
-		} else {
-			System.out.println(message);
-			TaitaiModel.customQuestions.addElement(expression);
-			TaitaiModel.saveQuestion(expression, questionType);
-			//_promptb.displayBox("Success: Your question has now been added!");
-		}
-	}
+	
 	
 	//find an answer to your expression when you know it wont cause an error
 	public static int findAnswerToExpression(String expression) {
