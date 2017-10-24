@@ -20,7 +20,7 @@ public class FeedBackPracticeView {
 	private Scene _feedbackPractice;
 	private boolean _correct;
 	int _questionNumber, _width, _height, _level, _numCorrect;
-	String _incorrect, _expression;
+	String _incorrect, _expression, _correctAnswer;
 	
 	/*
 	 * constructor
@@ -43,6 +43,8 @@ public class FeedBackPracticeView {
 		Button toMenu, toQuestion;
 		VBox feedbackLayout, toMenuLayout, toQuestionLayout;
 		
+		_correctAnswer = TaitaiModel.getWordRequired(_expression);
+		
 		//checking if something was said for recout.mlf
 		_incorrect = TaitaiModel.readRecoutFile();
 		if (_incorrect.equals(" [-8570]  CompleteRecognition: No observations processed in HVite")) {
@@ -57,7 +59,7 @@ public class FeedBackPracticeView {
 			feedback.setTextAlignment(TextAlignment.CENTER);
 			feedback.getStyleClass().add("label-correct");
 		} else {
-			feedback = new Label("Incorrect, you said " + _incorrect + ".");
+			feedback = new Label("Incorrect, you said " + _incorrect + "." + "\n" + "The required answer was " + _correctAnswer + ".");
 			toQuestion = new Button("Next Question");
 			feedback.setWrapText(true);
 			feedback.setTextAlignment(TextAlignment.CENTER);

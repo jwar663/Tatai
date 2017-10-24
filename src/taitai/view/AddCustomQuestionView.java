@@ -52,7 +52,6 @@ public class AddCustomQuestionView {
 		Button toMenu, submitQuestion;
 		VBox cqLayout, toMenuLayout;
 		TextField customExpressionText;
-		//final String customExpression;
 		
 		layout = new BorderPane();
 		toMenu = new Button("Go Back to Menu");

@@ -51,8 +51,6 @@ public class MainMenuView {
 		_stats.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				//testing error box
-				//_eb.displayBox("sfjashfbhadfksdavbkdsahbvksvsadjkdvb");
 				StatsView sv = new StatsView();
 				Taitai.changeScene(sv.getStatsView(width, height));
 			}
@@ -82,15 +80,15 @@ public class MainMenuView {
 				Taitai.changeScene(mv.getMenuView(width, height));
 			}
 		});
+		
 		// button event goes to quiz
-				_custom.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						//create new custom question class
-					AddCustomQuestionView cqv = new AddCustomQuestionView();
-						Taitai.changeScene(cqv.getAddCustomQuestionView(width, height));
-					}
-				});
+		_custom.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				AddCustomQuestionView cqv = new AddCustomQuestionView();
+				Taitai.changeScene(cqv.getAddCustomQuestionView(width, height));
+			}
+		});
 		
 		buttonLayout.setAlignment(Pos.TOP_CENTER);
 		titleLayout.setAlignment(Pos.CENTER);
