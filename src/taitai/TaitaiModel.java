@@ -497,6 +497,10 @@ public class TaitaiModel {
 		}
 	}
 	
+	public static int findCustomSize() {
+		return customQuestions.size();
+	}
+	
 	//creates all necessary files/folders
 	public static void createAllFiles() {
 		createFile("mkdir stats");

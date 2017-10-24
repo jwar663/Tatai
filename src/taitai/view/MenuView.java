@@ -19,11 +19,11 @@ import javafx.scene.text.*;
  */
 public class MenuView {
 	
-	//private ErrorBox _eb = new ErrorBox();
+	private static PromptBox _pb = new PromptBox();
 	private Scene _menu;
 	Button _level1, _level2, _level3, _level4, _level5;
 	int _mode;
-	
+	int _customSize = TaitaiModel.findCustomSize();
 	/*
 	 * constructor
 	 */
@@ -119,12 +119,16 @@ public class MenuView {
 				_level5.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						if(_mode == 1) {
-							PracticeView qv = new PracticeView(1, 5, 0, TaitaiModel.startTest(5));
-							Taitai.changeScene(qv.getPracticeView(width, height));
+						if(_customSize < 10) {
+							_pb.displayBox("Error", "You do not have enough custom questions.");
 						} else {
-							QuizView qv = new QuizView(true, 1, 5, 0, TaitaiModel.startTest(5));
-							Taitai.changeScene(qv.getQuizView(width, height));
+							if(_mode == 1) {
+								PracticeView qv = new PracticeView(1, 5, 0, TaitaiModel.startTest(5));
+								Taitai.changeScene(qv.getPracticeView(width, height));
+							} else {
+								QuizView qv = new QuizView(true, 1, 5, 0, TaitaiModel.startTest(5));
+								Taitai.changeScene(qv.getQuizView(width, height));
+							}
 						}
 					}
 				});
