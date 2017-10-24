@@ -24,6 +24,7 @@ public class QuizView {
 	private boolean _clickedRecord, _firstTry, _correct, _isAdded;
 	private Button _record, _listen, _submit;
 	private String _wordSaid, _expression;
+	private ConfirmBox _cb = new ConfirmBox();
 
 	/*
 	 * constructor
@@ -120,8 +121,12 @@ public class QuizView {
 		toMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				MainMenuView sv = new MainMenuView();
-				Taitai.changeScene(sv.getMainMenuView(width, height));
+				Boolean confirmation;
+				confirmation = _cb.displayBox("Back to Menu", "   Are you sure you wish to return to the menu? \n	All of your progress will be lost.   ");
+				if (confirmation) {
+					MainMenuView sv = new MainMenuView();
+					Taitai.changeScene(sv.getMainMenuView(width, height));
+				}
 			}
 		});
 

@@ -21,6 +21,7 @@ public class FeedBackQuizView {
 	private boolean _firstTry, _correct, _last;
 	int _questionNumber, _width, _height, _level, _numCorrect;
 	String _incorrect, _expression;
+	private ConfirmBox _cb = new ConfirmBox();
 	
 	/*
 	 * constructor
@@ -122,8 +123,12 @@ public class FeedBackQuizView {
 		toMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				MainMenuView sv = new MainMenuView();
-				Taitai.changeScene(sv.getMainMenuView(width, height));
+				Boolean confirmation;
+				confirmation = _cb.displayBox("Back to Menu", "   Are you sure you wish to return to the menu? \n	All of your progress will be lost.   ");
+				if (confirmation) {
+					MainMenuView sv = new MainMenuView();
+					Taitai.changeScene(sv.getMainMenuView(width, height));
+				}
 			}
 		});
 		
