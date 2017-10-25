@@ -22,6 +22,7 @@ public class FeedBackQuizView {
 	int _questionNumber, _width, _height, _level, _numCorrect;
 	String _incorrect, _expression;
 	private ConfirmBox _cb = new ConfirmBox();
+	private ConfirmBox _cb2 = new ConfirmBox();
 	
 	/*
 	 * constructor
@@ -48,8 +49,14 @@ public class FeedBackQuizView {
 		
 		BorderPane layout;
 		Label feedback;
-		Button toMenu, toQuestion;
+		Button toMenu, toQuestion, skipQuestion;
 		VBox feedbackLayout, toMenuLayout, toQuestionLayout;
+		
+		skipQuestion = new Button("Skip Question");
+		
+		feedbackLayout = new VBox();
+		toMenuLayout = new VBox(10);
+		toQuestionLayout = new VBox();
 		
 		//checking if something was said for recout.mlf
 		_incorrect = TaitaiModel.readRecoutFile();
@@ -71,6 +78,22 @@ public class FeedBackQuizView {
 			feedback.setWrapText(true);
 			feedback.setTextAlignment(TextAlignment.CENTER);
 			feedback.getStyleClass().add("label-tryAgain");
+			skipQuestion.getStyleClass().add("button-back");
+			
+			// skip question button
+			skipQuestion.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					Boolean confirmation;
+					confirmation = _cb2.displayBox("Back to Menu", "   Are you sure you wish to skip this question? \n	You will not be given a mark for this question.   ");
+					if (confirmation) {
+						QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
+						Taitai.changeScene(qv.getQuizView(width, height));
+						}
+					}
+				});
+						
+			toMenuLayout.getChildren().add(skipQuestion);
 		} else if (_last && _correct) {
 			feedback = new Label("Correct!");
 			toQuestion = new Button("Finish Quiz");
@@ -133,10 +156,10 @@ public class FeedBackQuizView {
 		});
 		
 		
+		
+		
 		// look and feel
-		feedbackLayout = new VBox();
-		toMenuLayout = new VBox();
-		toQuestionLayout = new VBox();
+		
 		
 		toMenu.getStyleClass().add("button-back");
 		toQuestion.getStyleClass().add("button-menu");
