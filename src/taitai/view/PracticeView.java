@@ -23,6 +23,7 @@ public class PracticeView {
 	private boolean _clickedRecord, _correct, _isAdded;
 	private Button _record, _listen, _submit;
 	private String _wordSaid, _expression;
+	private ConfirmBox _cb = new ConfirmBox();
 
 	/*
 	 * constructor
@@ -44,11 +45,12 @@ public class PracticeView {
 		// setting up elements of gui
 		BorderPane layout;
 		Label question, questionNumberLabel, dynamicScore;
-		Button toMenu;
+		Button toMenu, skipQuestion;
 		VBox questionLayout, toMenuLayout, buttonsLayout, counterLayout;
 
 		layout = new BorderPane();
 		toMenu = new Button("Go Back to Menu");
+		skipQuestion = new Button("Skip Question");
 		_record = new Button("Record");
 		question = new Label(_expression + "");
 		questionNumberLabel = new Label("Question " + _questionNumber);
@@ -56,7 +58,7 @@ public class PracticeView {
 
 		counterLayout = new VBox();
 		questionLayout = new VBox();
-		toMenuLayout = new VBox();
+		toMenuLayout = new VBox(10);
 		buttonsLayout = new VBox(20);
 		
 		_listen = new Button("Playback");
@@ -122,9 +124,23 @@ public class PracticeView {
 				Taitai.changeScene(sv.getMainMenuView(width, height));
 			}
 		});
+		
+		// skip question button
+			skipQuestion.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					Boolean confirmation;
+					confirmation = _cb.displayBox("Skip Question", "   Are you sure you wish to skip this question?	\nYou will not be given a mark for this question.	");
+					if (confirmation) {
+						PracticeView pv = new PracticeView(_questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
+						Taitai.changeScene(pv.getPracticeView(width, height));
+					}
+				}
+			});
 
 		// format
 		toMenu.getStyleClass().add("button-back");
+		skipQuestion.getStyleClass().add("button-back");
 		_record.getStyleClass().add("button-function");
 		question.getStyleClass().add("label-quiz");
 		dynamicScore.getStyleClass().add("label-dynamicScore");
@@ -144,7 +160,7 @@ public class PracticeView {
 
 		buttonsLayout.getChildren().add(_record);
 		questionLayout.getChildren().add(question);
-		toMenuLayout.getChildren().add(toMenu);
+		toMenuLayout.getChildren().addAll(skipQuestion, toMenu);
 		//counterLayout.getChildren().addAll(questionNumberLabel, dynamicScore);
 
 		layout.setTop(questionLayout);
