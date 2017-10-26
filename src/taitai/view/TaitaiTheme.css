@@ -59,13 +59,13 @@
 	-fx-font-size: 22.0pt;
 	-fx-font-family: "Helvetica";
 	-fx-text-fill: #000000;
-	-fx-padding: 180 0 50 0;
+	-fx-padding: 40 0 4 30;
 }
 .label-dynamicScore{
 	-fx-font-size: 22.0pt;
 	-fx-font-family: "Helvetica";
 	-fx-text-fill: #000000;
-	-fx-padding: 180 0 50 0;
+	-fx-padding: 40 20 10 200;
 }
 .button-menu{
     -fx-background-color: linear-gradient(#311B92, #3949AB);

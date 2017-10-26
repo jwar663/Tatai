@@ -26,6 +26,8 @@ public class QuizView {
 	private boolean _clickedRecord, _firstTry, _correct, _isAdded;
 	private Button _record, _listen, _submit;
 	private String _wordSaid, _expression;
+	private ConfirmBox _cb = new ConfirmBox();
+	private ConfirmBox _cb2 = new ConfirmBox();
 	private Thread _backgroundThread;
 
 	/*
@@ -49,19 +51,20 @@ public class QuizView {
 		// setting up elements of gui
 		BorderPane layout;
 		Label question, questionNumberLabel, dynamicScore;
-		Button toMenu;
-		VBox questionLayout, toMenuLayout, buttonsLayout, counterLayout;
+		Button toMenu, skipQuestion;
+		VBox questionLayout,  buttonsLayout;
+		HBox toMenuLayout;
 
 		layout = new BorderPane();
 		toMenu = new Button("Go Back to Menu");
+		skipQuestion = new Button("Skip Question");
 		_record = new Button("Record");
 		question = new Label(_expression + "");
 		questionNumberLabel = new Label("Question " + _questionNumber);
 		dynamicScore = new Label(_numCorrect + "/" + (_questionNumber - 1));
 
-		counterLayout = new VBox();
 		questionLayout = new VBox();
-		toMenuLayout = new VBox();
+		toMenuLayout = new HBox(10);
 		buttonsLayout = new VBox(20);
 		
 		_listen = new Button("Playback");
@@ -77,7 +80,7 @@ public class QuizView {
 					} else {
 						_correct = false;
 					}
-					FeedBackQuizView fbv = new FeedBackQuizView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _expression);
+					FeedBackQuizView fbv = new FeedBackQuizView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _expression, false);
 					Taitai.changeScene(fbv.getFeedBackView(width, height));
 			}
 		});
@@ -128,7 +131,6 @@ public class QuizView {
 				_backgroundThread.start();	
 			}
 		});
-
 		
 		// record button event handler, records and starts timer
 		_record.setOnAction(new EventHandler<ActionEvent>() {
@@ -194,13 +196,31 @@ public class QuizView {
 		toMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				MainMenuView sv = new MainMenuView();
-				Taitai.changeScene(sv.getMainMenuView(width, height));
+				Boolean confirmation;
+				confirmation = _cb.displayBox("Back to Menu", "   Are you sure you wish to return to the menu? \n	All of your progress will be lost.   ");
+				if (confirmation) {
+					MainMenuView sv = new MainMenuView();
+					Taitai.changeScene(sv.getMainMenuView(width, height));
+				}
+			}
+		});
+		
+		// skip question button
+		skipQuestion.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Boolean confirmation;
+				confirmation = _cb2.displayBox("Skip Question", "   Are you sure you wish to skip this question? \n	You will not be given a mark for this question.   ");
+				if (confirmation) {
+					FeedBackQuizView fbv = new FeedBackQuizView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _expression, true);
+					Taitai.changeScene(fbv.getFeedBackView(width, height));
+				}
 			}
 		});
 
-		// format
+
 		toMenu.getStyleClass().add("button-back");
+		skipQuestion.getStyleClass().add("button-back");
 		_record.getStyleClass().add("button-function");
 		question.getStyleClass().add("label-quiz");
 		dynamicScore.getStyleClass().add("label-dynamicScore");
@@ -210,26 +230,19 @@ public class QuizView {
 		questionLayout.setAlignment(Pos.CENTER);
 		buttonsLayout.setAlignment(Pos.TOP_CENTER);
 		toMenuLayout.setAlignment(Pos.BOTTOM_RIGHT);
-		//counterLayout.setAlignment(Pos.TOP_LEFT);
-
+		dynamicScore.setAlignment(Pos.CENTER_LEFT);
 		
 		buttonsLayout.setPadding(new Insets(10, 0, 20, 0));
 		toMenuLayout.setPadding(new Insets(0, 40, 40, 0));
-		
-		//counterLayout.setSpacing(10);
 
 		buttonsLayout.getChildren().add(_record);
 		questionLayout.getChildren().add(question);
-		toMenuLayout.getChildren().add(toMenu);
-		//counterLayout.getChildren().addAll(questionNumberLabel, dynamicScore);
+		toMenuLayout.getChildren().addAll(questionNumberLabel, dynamicScore, skipQuestion, toMenu);
 
 		layout.setTop(questionLayout);
 		layout.setCenter(buttonsLayout);
 		layout.setBottom(toMenuLayout);
-		//layout.setLeft(counterLayout);
 		
-
-
 		_quiz = new Scene(layout, width, height);
 		_quiz.getStylesheets().add("taitai/view/TaitaiTheme.css");
 		return _quiz;
