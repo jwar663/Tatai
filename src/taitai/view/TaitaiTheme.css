@@ -56,16 +56,16 @@
 	-fx-padding: 180 0 50 0;
 }
 .label-questionCounter{
-	-fx-font-size: 22.0pt;
+	-fx-font-size: 20.0pt;
 	-fx-font-family: "Helvetica";
 	-fx-text-fill: #000000;
-	-fx-padding: 40 0 4 30;
+	-fx-padding: 40 0 4 20;
 }
 .label-dynamicScore{
-	-fx-font-size: 22.0pt;
+	-fx-font-size: 20.0pt;
 	-fx-font-family: "Helvetica";
 	-fx-text-fill: #000000;
-	-fx-padding: 40 20 10 200;
+	-fx-padding: 40 15 10 190;
 }
 .button-menu{
     -fx-background-color: linear-gradient(#311B92, #3949AB);

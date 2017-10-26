@@ -36,7 +36,7 @@ public class FeedBackQuizView {
 		_expression = expression;
 		_skippedQuestion = skippedQuestion;
 		
-		if (_questionNumber > 9) {
+		if (_questionNumber == 10) {
 			_last = true;
 		} else {
 			_last = false;
@@ -51,12 +51,12 @@ public class FeedBackQuizView {
 		BorderPane layout;
 		Label feedback;
 		Button toMenu, toQuestion, skipQuestion;
-		VBox feedbackLayout, toMenuLayout, toQuestionLayout;
-		
+		VBox feedbackLayout, toQuestionLayout;
+		HBox toMenuLayout;
 		skipQuestion = new Button("Skip Question");
 		
 		feedbackLayout = new VBox();
-		toMenuLayout = new VBox(10);
+		toMenuLayout = new HBox(10);
 		toQuestionLayout = new VBox();
 		
 		//checking if something was said for recout.mlf
@@ -99,7 +99,7 @@ public class FeedBackQuizView {
 					@Override
 					public void handle(ActionEvent event) {
 						Boolean confirmation;
-						confirmation = _cb2.displayBox("Back to Menu", "Are you sure you wish to skip this question?\nYou will not be given a mark for this question.");
+						confirmation = _cb2.displayBox("Back to Menu", "   Are you sure you wish to skip this question? \n	You will not be given a mark for this question.   ");
 						if (confirmation) {
 							QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
 							Taitai.changeScene(qv.getQuizView(width, height));
@@ -143,7 +143,7 @@ public class FeedBackQuizView {
 				} else if (_correct && !_last) {
 					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
 					Taitai.changeScene(qv.getQuizView(_width, _height));
-				} else if (_firstTry && !_correct) {
+				} else if (_firstTry && !_correct && !_last) {
 					QuizView qv = new QuizView(false, _questionNumber, _level, _numCorrect, _expression);
 					Taitai.changeScene(qv.getQuizView(_width, _height));
 				} else if (_last) {
