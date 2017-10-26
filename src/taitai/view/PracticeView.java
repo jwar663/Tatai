@@ -9,8 +9,13 @@ import javafx.scene.layout.*;
 import taitai.Taitai;
 import taitai.TaitaiModel;
 import javafx.scene.control.*;
+
+import java.util.concurrent.TimeUnit;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 
 /**
  * Practice View for Gui
@@ -23,7 +28,8 @@ public class PracticeView {
 	private boolean _clickedRecord, _correct, _isAdded;
 	private Button _record, _listen, _submit;
 	private String _wordSaid, _expression;
-	private ConfirmBox _cb = new ConfirmBox();
+	private Thread _backgroundThread;
+	private VBox _buttonsLayout = new VBox(20);
 
 	/*
 	 * constructor
@@ -45,12 +51,11 @@ public class PracticeView {
 		// setting up elements of gui
 		BorderPane layout;
 		Label question, questionNumberLabel, dynamicScore;
-		Button toMenu, skipQuestion;
-		VBox questionLayout, toMenuLayout, buttonsLayout, counterLayout;
+		Button toMenu;
+		VBox questionLayout, toMenuLayout, counterLayout;
 
 		layout = new BorderPane();
 		toMenu = new Button("Go Back to Menu");
-		skipQuestion = new Button("Skip Question");
 		_record = new Button("Record");
 		question = new Label(_expression + "");
 		questionNumberLabel = new Label("Question " + _questionNumber);
@@ -58,61 +63,132 @@ public class PracticeView {
 
 		counterLayout = new VBox();
 		questionLayout = new VBox();
-		toMenuLayout = new VBox(10);
-		buttonsLayout = new VBox(20);
-		
+		toMenuLayout = new VBox();
+
+
 		_listen = new Button("Playback");
 		_submit = new Button("Submit Answer");
-		
+
 		// submit button submits question and displays next view
 		_submit.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-					if (TaitaiModel.pronouncedCorrectlyBoolean(_wordSaid, TaitaiModel.getWordRequired(_expression))) {
-						_correct = true;
-						_numCorrect++;
-					} else {
-						_correct = false;
-					}
-					FeedBackPracticeView fbv = new FeedBackPracticeView(_questionNumber, _level, _numCorrect, _correct, _expression);
-					Taitai.changeScene(fbv.getFeedBackPracticeView(width, height));
+				if (TaitaiModel.pronouncedCorrectlyBoolean(_wordSaid, TaitaiModel.getWordRequired(_expression))) {
+					_correct = true;
+					_numCorrect++;
+				} else {
+					_correct = false;
+				}
+				FeedBackPracticeView fbv = new FeedBackPracticeView(_questionNumber, _level, _numCorrect, _correct, _expression);
+				Taitai.changeScene(fbv.getFeedBackPracticeView(width, height));
 			}
 		});
-		
+
 		// listen button event handler 
 		_listen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-					_listen.setText("Playing...");
-					TaitaiModel.playAudio();
-					_listen.setText("Playback");
+				_listen.setText("Playing...");
+				TaitaiModel.playAudio();
+				_listen.setText("Playback");
+				
+				_listen.setText("Playing...");
+				_listen.setDisable(true);
+				_listen.getStyleClass().remove("button-function");
+				_listen.getStyleClass().add("button-functionClick");
+				_record.setDisable(true);
+				_record.getStyleClass().remove("button-function");
+				_record.getStyleClass().add("button-functionClick");
+
+				Task backgroundTask = new Task<Void>() {
+
+					@Override
+					public void run() {
+						
+						TaitaiModel.playAudio();
+						
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								_record.setDisable(false);								
+								_record.getStyleClass().remove("button-functionClick");
+								_record.getStyleClass().add("button-function");
+								_listen.setText("Playback");
+								_listen.setDisable(false);
+								_listen.getStyleClass().remove("button-functionClick");
+								_listen.getStyleClass().add("button-function");
+							}
+						});
+					}
+					@Override
+					protected Void call() throws Exception {
+						return null;
+					}
+				};	
+				_backgroundThread = new Thread(backgroundTask);
+				_backgroundThread.setDaemon(true);
+				_backgroundThread.start();	
 			}
 		});
 
-		
+
 		// record button event handler, records and starts timer
 		_record.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				_record.setText("Recording...");
-				if (_level == 1) {
-					TaitaiModel.recordAudio("3");
-				} else {
-					TaitaiModel.recordAudio("5");
-				}
-				_record.setText("Record");
-				TaitaiModel.writeToRecout();
-				_wordSaid = TaitaiModel.readRecoutFile();
-				// wanted to have threads here but its too difficult to implement without being able to run any code
-
-				if (!_isAdded) {
-					_listen.getStyleClass().add("button-function");
-					_submit.getStyleClass().add("button-menu");
-					buttonsLayout.getChildren().addAll(_listen, _submit);
-				}
 				
-				_isAdded = true;
-				_record.setText("Record");
+				_listen.setDisable(true);
+				_listen.getStyleClass().remove("button-function");
+				_listen.getStyleClass().add("button-functionClick");
+				_record.setText("Recording...");
+				_record.setDisable(true);
+				_record.getStyleClass().remove("button-function");
+				_record.getStyleClass().add("button-functionClick");
+
+				Task backgroundTask = new Task<Void>() {
+
+					@Override
+					public void run() {
+						
+						if (_level == 1) {
+							TaitaiModel.recordAudio("3");
+						} else {
+							TaitaiModel.recordAudio("5");
+						}
+
+						TaitaiModel.writeToRecout();
+						_wordSaid = TaitaiModel.readRecoutFile();
+						
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								
+								if (!_isAdded) {
+									_listen.getStyleClass().add("button-function");
+									_submit.getStyleClass().add("button-menu");
+									_buttonsLayout.getChildren().addAll(_listen, _submit);
+								}
+								_record.setText("Record");
+								_record.setDisable(false);								
+								_record.getStyleClass().remove("button-functionClick");
+								_record.getStyleClass().add("button-function");
+								_listen.setDisable(false);
+								_listen.getStyleClass().remove("button-functionClick");
+								_listen.getStyleClass().add("button-function");
+								
+								_isAdded = true;
+								
+							}
+						});
+					}
+					@Override
+					protected Void call() throws Exception {
+						return null;
+					}
+				};	
+				_backgroundThread = new Thread(backgroundTask);
+				_backgroundThread.setDaemon(true);
+				_backgroundThread.start();	
 			}
 		});
 
@@ -124,23 +200,9 @@ public class PracticeView {
 				Taitai.changeScene(sv.getMainMenuView(width, height));
 			}
 		});
-		
-		// skip question button
-			skipQuestion.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event) {
-					Boolean confirmation;
-					confirmation = _cb.displayBox("Skip Question", "   Are you sure you wish to skip this question?	");
-					if (confirmation) {
-						PracticeView pv = new PracticeView(_questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
-						Taitai.changeScene(pv.getPracticeView(width, height));
-					}
-				}
-			});
 
 		// format
 		toMenu.getStyleClass().add("button-back");
-		skipQuestion.getStyleClass().add("button-back");
 		_record.getStyleClass().add("button-function");
 		question.getStyleClass().add("label-quiz");
 		dynamicScore.getStyleClass().add("label-dynamicScore");
@@ -148,26 +210,26 @@ public class PracticeView {
 
 		//added extra labels, need to align them properly.
 		questionLayout.setAlignment(Pos.CENTER);
-		buttonsLayout.setAlignment(Pos.TOP_CENTER);
+		_buttonsLayout.setAlignment(Pos.TOP_CENTER);
 		toMenuLayout.setAlignment(Pos.BOTTOM_RIGHT);
 		//counterLayout.setAlignment(Pos.TOP_LEFT);
 
-		
-		buttonsLayout.setPadding(new Insets(10, 0, 20, 0));
+
+		_buttonsLayout.setPadding(new Insets(10, 0, 20, 0));
 		toMenuLayout.setPadding(new Insets(0, 40, 40, 0));
-		
+
 		//counterLayout.setSpacing(10);
 
-		buttonsLayout.getChildren().add(_record);
+		_buttonsLayout.getChildren().add(_record);
 		questionLayout.getChildren().add(question);
-		toMenuLayout.getChildren().addAll(skipQuestion, toMenu);
+		toMenuLayout.getChildren().add(toMenu);
 		//counterLayout.getChildren().addAll(questionNumberLabel, dynamicScore);
 
 		layout.setTop(questionLayout);
-		layout.setCenter(buttonsLayout);
+		layout.setCenter(_buttonsLayout);
 		layout.setBottom(toMenuLayout);
 		//layout.setLeft(counterLayout);
-		
+
 
 
 		_practice = new Scene(layout, width, height);
@@ -175,5 +237,7 @@ public class PracticeView {
 		return _practice;
 
 	}
+
+
 
 }
