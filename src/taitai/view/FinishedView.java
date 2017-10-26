@@ -1,34 +1,32 @@
 package taitai.view;
 
-import javafx.application.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.stage.*;
 import taitai.Taitai;
 import taitai.TaitaiModel;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.text.*;
 
 /**
- * Finished view Gui
+ * Finished view for Gui
  * @author Matthew Taylor, Jaedyn Ward
  */
 public class FinishedView {
 	
 	private Scene _finished;
-	private int _numCorrect;
+	private int _numCorrect, _level;
 	private boolean _goNext;
 	
 	/*
 	 * constructor
 	 */
-	public FinishedView(boolean goNext, int numCorrect) {
+	public FinishedView(boolean goNext, int numCorrect, int level) {
 		_numCorrect = numCorrect;
 		_goNext = goNext;
+		_level = level;
 	}
 	
 	public Scene getFinishedView(int width, int height) {
@@ -71,15 +69,15 @@ public class FinishedView {
 		layout.setTop(messageLayout);
 		layout.setBottom(toMenuLayout);
 		
-		// if can go to next level, if >8 was achieved in easy mode
-		if (_goNext) {
+		// if can go to next level, if >8 was achieved in any mode
+		if ((_goNext) && (_level < 5)) {
 			nextLevel = new Button("Go To Next Level");
 			nextLevelLayout = new VBox();
 			
 			nextLevel.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
-					QuizView qv = new QuizView(true, 1, 2, 0, TaitaiModel.startTest(2));
+					QuizView qv = new QuizView(true, 1, 2, 0, TaitaiModel.startTest(_level + 1));
 					Taitai.changeScene(qv.getQuizView(width, height));
 				}
 			});

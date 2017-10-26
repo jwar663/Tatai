@@ -1,25 +1,20 @@
 package taitai.view;
 
-import javafx.application.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.stage.*;
 import taitai.Taitai;
-import taitai.TaitaiModel;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.text.*;
 
 /** 
- * Menu GUI
+ * Welcome Menu GUI
  * @author Matthew Taylor
  */
 public class MainMenuView {
 	
-	//private ErrorBox _eb = new ErrorBox();
 	private Scene _mainMenu;
 	Button _practice, _quiz, _stats, _custom, _about;
 	private static PromptBox _pb = new PromptBox();
@@ -35,7 +30,6 @@ public class MainMenuView {
 		_quiz = new Button("Quiz Mode");
 		_stats = new Button("View Statistics");
 		_custom = new Button("Create Custom Questions");
-		_about = new Button("About Tātai");
 		layout = new BorderPane();
 		titleLayout = new VBox();
 		buttonLayout = new VBox(40);
@@ -45,7 +39,6 @@ public class MainMenuView {
 		_quiz.getStyleClass().add("button-menu");
 		_stats.getStyleClass().add("button-menu");
 		_custom.getStyleClass().add("button-menu");
-		_about.getStyleClass().add("button-menu");
 		
 		// goes to stats view
 		_stats.setOnAction(new EventHandler<ActionEvent>() {
@@ -53,14 +46,6 @@ public class MainMenuView {
 			public void handle(ActionEvent event) {
 				StatsView sv = new StatsView();
 				Taitai.changeScene(sv.getStatsView(width, height));
-			}
-		});
-		
-		// goes to an about confirm box
-		_about.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				_pb.displayBox("About Tātai", "Finish this...");
 			}
 		});
 		
@@ -72,6 +57,7 @@ public class MainMenuView {
 				Taitai.changeScene(mv.getMenuView(width, height));
 			}
 		});
+		
 		// button event goes to quiz
 		_quiz.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -90,6 +76,7 @@ public class MainMenuView {
 			}
 		});
 		
+		//look and feel
 		buttonLayout.setAlignment(Pos.TOP_CENTER);
 		titleLayout.setAlignment(Pos.CENTER);
 		

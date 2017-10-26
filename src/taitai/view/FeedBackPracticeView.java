@@ -12,7 +12,7 @@ import taitai.TaitaiModel;
 import javafx.scene.control.*;
 
 /**
- * The feedback scene for the GUI
+ * The feedback scene for practice for the GUI
  * @author Matthew Taylor, Jaedyn Ward
  */
 public class FeedBackPracticeView {
@@ -51,7 +51,7 @@ public class FeedBackPracticeView {
 			_incorrect = "nothing";
 		}
 		
-		// logic for correct message and text alignment
+		// logic for correct/incorrect message and text alignment
 		if (_correct) {
 			feedback = new Label("Correct!");
 			toQuestion = new Button("Next Question");
@@ -83,6 +83,7 @@ public class FeedBackPracticeView {
 			}
 		});
 		
+		//menu button functionality
 		toMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -92,7 +93,7 @@ public class FeedBackPracticeView {
 		});
 		
 		
-		// look and feel
+		//look and feel
 		feedbackLayout = new VBox();
 		toMenuLayout = new VBox();
 		toQuestionLayout = new VBox();

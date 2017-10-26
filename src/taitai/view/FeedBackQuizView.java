@@ -12,7 +12,7 @@ import taitai.TaitaiModel;
 import javafx.scene.control.*;
 
 /**
- * The feedback scene for the GUI
+ * The feedback scene for quiz for the GUI
  * @author Matthew Taylor, Jaedyn Ward
  */
 public class FeedBackQuizView {
@@ -65,10 +65,16 @@ public class FeedBackQuizView {
 			_incorrect = "nothing";
 		}
 		
-		// logic for correct message and text alignment
-		if (_skippedQuestion) {
+		// logic for correct/incorrect message and text alignment and if the question was skipped
+		if (_skippedQuestion && !_last) {
 			feedback = new Label("You skipped the question, you received no marks.");
 			toQuestion = new Button("Next Question");
+			feedback.setWrapText(true);
+			feedback.setTextAlignment(TextAlignment.CENTER);
+			feedback.getStyleClass().add("label-incorrect");
+		} else if(_skippedQuestion && _last) {
+			feedback = new Label("You skipped the question, you received no marks.");
+			toQuestion = new Button("Finish Quiz");
 			feedback.setWrapText(true);
 			feedback.setTextAlignment(TextAlignment.CENTER);
 			feedback.getStyleClass().add("label-incorrect");
@@ -88,7 +94,7 @@ public class FeedBackQuizView {
 				feedback.getStyleClass().add("label-tryAgain");
 				skipQuestion.getStyleClass().add("button-back");
 				
-				// skip question button
+				// skip question button functionality
 				skipQuestion.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
@@ -142,11 +148,11 @@ public class FeedBackQuizView {
 					Taitai.changeScene(qv.getQuizView(_width, _height));
 				} else if (_last) {
 					TaitaiModel.saveStats(_numCorrect, _level);
-					if ((_level == 1) && (_numCorrect >= 8)) {
-						FinishedView fv = new FinishedView(true, _numCorrect);
+					if ((_level < 5) && (_numCorrect >= 8)) {
+						FinishedView fv = new FinishedView(true, _numCorrect, _level);
 						Taitai.changeScene(fv.getFinishedView(_width, _height));
 					} else {
-						FinishedView fv = new FinishedView(false, _numCorrect);
+						FinishedView fv = new FinishedView(false, _numCorrect, _level);
 						Taitai.changeScene(fv.getFinishedView(_width, _height));
 					}
 				} else {
@@ -156,11 +162,12 @@ public class FeedBackQuizView {
 			}
 		});
 		
+		//menu action listener, with confirm display box as progress will be lost
 		toMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				Boolean confirmation;
-				confirmation = _cb.displayBox("Back to Menu", "   Are you sure you wish to return to the menu? \n	All of your progress will be lost.   ");
+				confirmation = _cb.displayBox("Back to Menu", "Are you sure you wish to return to the menu?\nAll of your progress will be lost.");
 				if (confirmation) {
 					MainMenuView sv = new MainMenuView();
 					Taitai.changeScene(sv.getMainMenuView(width, height));
@@ -171,9 +178,7 @@ public class FeedBackQuizView {
 		
 		
 		
-		// look and feel
-		
-		
+		//look and feel
 		toMenu.getStyleClass().add("button-back");
 		toQuestion.getStyleClass().add("button-menu");
 		

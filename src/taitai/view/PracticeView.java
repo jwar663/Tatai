@@ -22,7 +22,7 @@ public class PracticeView {
 
 	private Scene _practice;
 	private int _questionNumber, _level, _numCorrect;
-	private boolean _clickedRecord, _correct, _isAdded;
+	private boolean _correct, _isAdded;
 	private Button _record, _listen, _submit;
 	private String _wordSaid, _expression;
 	private ConfirmBox _cb = new ConfirmBox();
@@ -33,7 +33,6 @@ public class PracticeView {
 	 */
 	public PracticeView(int questionNumber, int level, int numCorrect, String expression) {
 		_questionNumber = questionNumber;
-		_clickedRecord = false;
 		_level = level;
 		_numCorrect = numCorrect;
 		_expression = expression;
@@ -71,14 +70,14 @@ public class PracticeView {
 		_submit.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-					if (TaitaiModel.pronouncedCorrectlyBoolean(_wordSaid, TaitaiModel.getWordRequired(_expression))) {
-						_correct = true;
-						_numCorrect++;
-					} else {
-						_correct = false;
-					}
-					FeedBackPracticeView fbv = new FeedBackPracticeView(_questionNumber, _level, _numCorrect, _correct, _expression);
-					Taitai.changeScene(fbv.getFeedBackPracticeView(width, height));
+				if (TaitaiModel.pronouncedCorrectlyBoolean(_wordSaid, TaitaiModel.getWordRequired(_expression))) {
+					_correct = true;
+					_numCorrect++;
+				} else {
+					_correct = false;
+				}
+				FeedBackPracticeView fbv = new FeedBackPracticeView(_questionNumber, _level, _numCorrect, _correct, _expression);
+				Taitai.changeScene(fbv.getFeedBackPracticeView(width, height));
 			}
 		});
 		
@@ -99,12 +98,9 @@ public class PracticeView {
 				_record.getStyleClass().add("button-functionClick");
 
 				Task backgroundTask = new Task<Void>() {
-
 					@Override
 					public void run() {
-						
 						TaitaiModel.playAudio();
-						
 						Platform.runLater(new Runnable() {
 							@Override
 							public void run() {
@@ -129,12 +125,10 @@ public class PracticeView {
 			}
 		});
 
-		
 		// record button event handler, records and starts timer
 		_record.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				
 				_listen.setDisable(true);
 				_listen.getStyleClass().remove("button-function");
 				_listen.getStyleClass().add("button-functionClick");
@@ -144,23 +138,14 @@ public class PracticeView {
 				_record.getStyleClass().add("button-functionClick");
 
 				Task backgroundTask = new Task<Void>() {
-
 					@Override
 					public void run() {
-						
-						if (_level == 1) {
-							TaitaiModel.recordAudio("3");
-						} else {
-							TaitaiModel.recordAudio("5");
-						}
-
+						TaitaiModel.recordAudio("5");
 						TaitaiModel.writeToRecout();
 						_wordSaid = TaitaiModel.readRecoutFile();
-						
 						Platform.runLater(new Runnable() {
 							@Override
-							public void run() {
-								
+							public void run() {		
 								if (!_isAdded) {
 									_listen.getStyleClass().add("button-function");
 									_submit.getStyleClass().add("button-menu");
@@ -200,17 +185,17 @@ public class PracticeView {
 		});
 		
 		// skip question button
-			skipQuestion.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event) {
-					Boolean confirmation;
-					confirmation = _cb.displayBox("Skip Question", "   Are you sure you wish to skip this question?	");
-					if (confirmation) {
-						PracticeView pv = new PracticeView(_questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
-						Taitai.changeScene(pv.getPracticeView(width, height));
-					}
+		skipQuestion.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				Boolean confirmation;
+				confirmation = _cb.displayBox("Skip Question", "   Are you sure you wish to skip this question?	");
+				if (confirmation) {
+					PracticeView pv = new PracticeView(_questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
+					Taitai.changeScene(pv.getPracticeView(width, height));
 				}
-			});
+			}
+		});
 
 		// format
 		toMenu.getStyleClass().add("button-back");
@@ -220,7 +205,6 @@ public class PracticeView {
 		dynamicScore.getStyleClass().add("label-dynamicScore");
 		questionNumberLabel.getStyleClass().add("label-questionNumber");
 
-		//added extra labels, need to align them properly.
 		questionLayout.setAlignment(Pos.CENTER);
 		buttonsLayout.setAlignment(Pos.TOP_CENTER);
 		toMenuLayout.setAlignment(Pos.BOTTOM_RIGHT);
@@ -240,7 +224,5 @@ public class PracticeView {
 		_practice = new Scene(layout, width, height);
 		_practice.getStylesheets().add("taitai/view/TaitaiTheme.css");
 		return _practice;
-
 	}
-
 }

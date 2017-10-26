@@ -6,7 +6,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.TextAlignment;
 import taitai.Taitai;
 import taitai.TaitaiModel;
 import javafx.scene.control.*;
@@ -23,21 +22,15 @@ public class AddCustomQuestionView {
 	private static PromptBox _pb = new PromptBox();
 	
 	//checks what sort of error or what the answer to the expression is
-		public static void checkExpression(String expression, String questionType) {
-			String message = TaitaiModel.computeExpression(expression);
-			if(message.equals("error bash")) {
-				System.out.println("you provided an invalid expression");
-				//add pop-up error box
-				_pb.displayBox("Error", "You provided an invalid expression");
-			} else if(message.equals("error bounds")) {
-				System.out.println("your expression equates to more than 99 or less than 1");
-				//add pop-up error box
-				_pb.displayBox("Error", "Your expression equates to more than 99 or less than 1");
-			} else {
-				System.out.println(message);
-				TaitaiModel.customQuestions.addElement(expression);
-				TaitaiModel.saveQuestion(expression, questionType);
-				_pb.displayBox("Success", "Success: Your question has now been added!");
+	public static void checkExpression(String expression, String questionType) {
+		String message = TaitaiModel.computeExpression(expression);
+		if(message.equals("error bash")) {
+			_pb.displayBox("Error", "You provided an invalid expression");
+		} else if(message.equals("error bounds")) {
+			_pb.displayBox("Error", "Your expression equates to more than 99 or less than 1");
+		} else {
+			TaitaiModel.saveQuestion(expression, questionType);
+			_pb.displayBox("Success", "Success: Your question has now been added!");
 			}
 		}
 	
@@ -51,6 +44,7 @@ public class AddCustomQuestionView {
 		VBox cqLayout, toMenuLayout;
 		TextField customExpressionText;
 		
+		//initialising jfx features
 		layout = new BorderPane();
 		toMenu = new Button("Go Back to Menu");
 		customExpressionText = new TextField("Please enter your expression here");
@@ -59,6 +53,7 @@ public class AddCustomQuestionView {
 		submitQuestion = new Button("Submit");
 		note = new Label("Note: Your answer will be rounded appropriately if the answer is not an integer.");
 		
+		//functionality for submit question  button
 		submitQuestion.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -67,6 +62,7 @@ public class AddCustomQuestionView {
 			}
 		});
 		
+		//functionality for menu button
 		toMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {

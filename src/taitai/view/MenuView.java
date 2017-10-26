@@ -1,22 +1,20 @@
 package taitai.view;
 
-import javafx.application.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.stage.*;
 import taitai.Taitai;
 import taitai.TaitaiModel;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.text.*;
 
 /** 
  * Menu GUI
  * @author Matthew Taylor, Jaedyn Ward
  */
+
 public class MenuView {
 	
 	private static PromptBox _pb = new PromptBox();
@@ -60,19 +58,19 @@ public class MenuView {
 		_level5.getStyleClass().add("button-menu");
 		toMenu.getStyleClass().add("button-back");
 		
-		// button event goes to level 2 quiz
-			_level1.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event) {
-					if(_mode == 1) {
-						PracticeView qv = new PracticeView(1, 1, 0, TaitaiModel.startTest(1));
-						Taitai.changeScene(qv.getPracticeView(width, height));
-					} else {
-						QuizView qv = new QuizView(true, 1, 1, 0, TaitaiModel.startTest(1));
-						Taitai.changeScene(qv.getQuizView(width, height));
-					}
+		// button event goes to level 1 quiz
+		_level1.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if(_mode == 1) {
+					PracticeView qv = new PracticeView(1, 1, 0, TaitaiModel.startTest(1));
+					Taitai.changeScene(qv.getPracticeView(width, height));
+				} else {
+					QuizView qv = new QuizView(true, 1, 1, 0, TaitaiModel.startTest(1));
+					Taitai.changeScene(qv.getQuizView(width, height));
 				}
-			});
+			}
+		});
 		// button event goes to level 2 quiz
 		_level2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -87,62 +85,62 @@ public class MenuView {
 			}
 		});
 		
-		// button event goes to level 2 quiz
-				_level3.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						if(_mode == 1) {
-							PracticeView qv = new PracticeView(1, 3, 0, TaitaiModel.startTest(3));
-							Taitai.changeScene(qv.getPracticeView(width, height));
-						} else {
-							QuizView qv = new QuizView(true, 1, 3, 0, TaitaiModel.startTest(3));
-							Taitai.changeScene(qv.getQuizView(width, height));
-						}
-					}
-				});
+		// button event goes to level 3 quiz
+		_level3.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if(_mode == 1) {
+					PracticeView qv = new PracticeView(1, 3, 0, TaitaiModel.startTest(3));
+					Taitai.changeScene(qv.getPracticeView(width, height));
+				} else {
+					QuizView qv = new QuizView(true, 1, 3, 0, TaitaiModel.startTest(3));
+					Taitai.changeScene(qv.getQuizView(width, height));
+				}
+			}
+		});
 				
-				// button event goes to level 2 quiz
-				_level4.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						if(_mode == 1) {
-							PracticeView qv = new PracticeView(1, 4, 0, TaitaiModel.startTest(4));
-							Taitai.changeScene(qv.getPracticeView(width, height));
-						} else {
-							QuizView qv = new QuizView(true, 1, 4, 0, TaitaiModel.startTest(4));
-							Taitai.changeScene(qv.getQuizView(width, height));
-						}
-					}
-				});
+		// button event goes to level 4 quiz
+		_level4.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if(_mode == 1) {
+					PracticeView qv = new PracticeView(1, 4, 0, TaitaiModel.startTest(4));
+					Taitai.changeScene(qv.getPracticeView(width, height));
+				} else {
+					QuizView qv = new QuizView(true, 1, 4, 0, TaitaiModel.startTest(4));
+					Taitai.changeScene(qv.getQuizView(width, height));
+				}
+			}
+		});
 				
-				// button event goes to level 2 quiz
-				_level5.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						if(_customSize < 10) {
-							_pb.displayBox("Error", "You do not have enough custom questions.");
-						} else {
-							if(_mode == 1) {
-								PracticeView qv = new PracticeView(1, 5, 0, TaitaiModel.startTest(5));
-								Taitai.changeScene(qv.getPracticeView(width, height));
-							} else {
-								QuizView qv = new QuizView(true, 1, 5, 0, TaitaiModel.startTest(5));
-								Taitai.changeScene(qv.getQuizView(width, height));
-							}
-						}
+		// button event goes to level 5 quiz
+		_level5.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if(_customSize < 10) {
+					_pb.displayBox("Error", "You do not have enough custom questions.");
+				} else {
+					if(_mode == 1) {
+						PracticeView qv = new PracticeView(1, 5, 0, TaitaiModel.startTest(5));
+						Taitai.changeScene(qv.getPracticeView(width, height));
+					} else {
+						QuizView qv = new QuizView(true, 1, 5, 0, TaitaiModel.startTest(5));
+						Taitai.changeScene(qv.getQuizView(width, height));
 					}
-				});
+				}
+			}
+		});
 				
-				// to menu button
-				toMenu.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						MainMenuView sv = new MainMenuView();
-						Taitai.changeScene(sv.getMainMenuView(width, height));
-					}
-				});
+		// to menu button
+		toMenu.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				MainMenuView sv = new MainMenuView();
+				Taitai.changeScene(sv.getMainMenuView(width, height));
+				}
+		});
 		
-		
+		//look and feel
 		buttonLayout.setAlignment(Pos.TOP_CENTER);
 		titleLayout.setAlignment(Pos.CENTER);
 		toMenuLayout.setAlignment(Pos.BOTTOM_RIGHT);

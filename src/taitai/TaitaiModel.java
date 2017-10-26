@@ -9,6 +9,7 @@ import java.io.LineNumberReader;
 import java.util.Vector;
 
 /**
+ * Class for various functionality used within the application
  * @author Matthew Taylor, Jaedyn Ward
  */
 
@@ -25,8 +26,14 @@ public class TaitaiModel {
 				String command;
 				if (level == 1) {
 					command = "echo " + numCorrect + " >> stats/.level1";
-				} else {
+				} else if (level == 2){
 					command = "echo " + numCorrect + " >> stats/.level2";
+				} else if (level == 3){
+					command = "echo " + numCorrect + " >> stats/.level3";
+				} else if (level == 4){
+					command = "echo " + numCorrect + " >> stats/.level4";
+				} else {
+					command = "echo " + numCorrect + " >> stats/.level5";
 				}
 				ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
 				Process process = pb.start();
@@ -36,20 +43,17 @@ public class TaitaiModel {
 			
 	}
 	
-	//clears stats
+	//clears stats for all levels
 	public static void clearStats() {
 		try {
-			String command = "rm stats/.level1";
+			String command = "rm stats/.level1 stats/.level2 stats/.level3 stats/.level4 stats/.level5";
 			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
 			Process process = pb.start();
-			command = "rm stats/.level2";
-			pb = new ProcessBuilder("bash", "-c", command);
-			process = pb.start();
 		} catch (Exception f) {
 			f.printStackTrace();
 		}
 	}
-	//convert a string array to an integer array
+	//convert a string array to an integer array specifically for stats
 	public static int[] convertStats(String stats[]) {
 		int[] statsInt = new int[stats.length];
 		for (int i = 0; i < stats.length; i++) {
@@ -97,7 +101,6 @@ public class TaitaiModel {
 	//starts the test, by finding a random number that corresponds to the level
 	public static String startTest(int level) {
 		String testExpression;
-		int elementsInCustom = 0;
 		if (level == 1) {
 			testExpression = Integer.toString(randomInt(1,99));
 		} else if (level == 2) {
@@ -111,8 +114,7 @@ public class TaitaiModel {
 				testExpression = multDivQuestions.get(randomInt(0,49));
 			}		
 		} else {
-			elementsInCustom = customQuestions.size();
-			testExpression = customQuestions.get(elementsInCustom);
+			testExpression = customQuestions.get(randomInt(0, findCustomSize() - 1));
 		}
 		return testExpression;
 	}
@@ -390,7 +392,7 @@ public class TaitaiModel {
 		
 	}
 	
-	//creates a new process that takes a bash command as an input
+	//creates a new process that takes a bash command as an input, specifically for HTK calls
 	public static void createNewProcess(String command) {
 		try {
 			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
@@ -425,7 +427,7 @@ public class TaitaiModel {
 	}
 	
 	//user inputs an expression as a string and completes a bash 
-	//command to find out the mathematical answer
+	//command to find out the mathematical answer or an error
 	public static String computeExpression(String expression) {
 		try {
 			String AnswerOrError;
@@ -480,9 +482,11 @@ public class TaitaiModel {
 		}
 	}
 	
-	//save question
+	//saves question to file for future uses and adds question to custom question
+	//vector
 	public static void saveQuestion(String expression, String questionType) {
 		try {
+				customQuestions.addElement(expression);
 				String command;
 				command = "echo " + expression + " >> questions/." + questionType;
 				ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
@@ -503,6 +507,7 @@ public class TaitaiModel {
 		}
 	}
 	
+	//finds out the size of the custom questions vector
 	public static int findCustomSize() {
 		return customQuestions.size();
 	}

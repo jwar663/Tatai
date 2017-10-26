@@ -1,16 +1,12 @@
 package taitai;
 
-import java.io.IOException;
-import java.util.Vector;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import taitai.view.MainMenuView;
 
 /**
- * Taitai Maori number pronounciation practiser
+ * Taitai Maori number pronounciation and mathematics practiser
  * @author Matthew Taylor, Jaedyn Ward
  */
 
@@ -26,7 +22,7 @@ public class Taitai extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		
-		//initialises maoriNumbers vector.
+		//initialises various vector.
 		TaitaiModel.assignMaoriNumbers();
 		TaitaiModel.assignRegularQuestions();
 		TaitaiModel.assignCustomQuestions();

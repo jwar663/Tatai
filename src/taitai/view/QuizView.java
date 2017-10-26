@@ -10,8 +10,6 @@ import javafx.scene.layout.*;
 import taitai.Taitai;
 import taitai.TaitaiModel;
 import javafx.scene.control.*;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
@@ -23,7 +21,7 @@ public class QuizView {
 
 	private Scene _quiz;
 	private int _questionNumber, _level, _numCorrect;
-	private boolean _clickedRecord, _firstTry, _correct, _isAdded;
+	private boolean _firstTry, _correct, _isAdded;
 	private Button _record, _listen, _submit;
 	private String _wordSaid, _expression;
 	private ConfirmBox _cb = new ConfirmBox();
@@ -36,7 +34,6 @@ public class QuizView {
 	public QuizView(boolean firstTry, int questionNumber, int level, int numCorrect, String expression) {
 		_questionNumber = questionNumber;
 		_firstTry = firstTry;
-		_clickedRecord = false;
 		_level = level;
 		_numCorrect = numCorrect;
 		_expression = expression;
@@ -102,12 +99,9 @@ public class QuizView {
 				_record.getStyleClass().add("button-functionClick");
 
 				Task backgroundTask = new Task<Void>() {
-
 					@Override
 					public void run() {
-						
 						TaitaiModel.playAudio();
-						
 						Platform.runLater(new Runnable() {
 							@Override
 							public void run() {
@@ -136,7 +130,6 @@ public class QuizView {
 		_record.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				
 				_listen.setDisable(true);
 				_listen.getStyleClass().remove("button-function");
 				_listen.getStyleClass().add("button-functionClick");
@@ -146,23 +139,15 @@ public class QuizView {
 				_record.getStyleClass().add("button-functionClick");
 
 				Task backgroundTask = new Task<Void>() {
-
 					@Override
 					public void run() {
-						
-						if (_level == 1) {
-							TaitaiModel.recordAudio("3");
-						} else {
-							TaitaiModel.recordAudio("5");
-						}
-
+						TaitaiModel.recordAudio("5");
 						TaitaiModel.writeToRecout();
 						_wordSaid = TaitaiModel.readRecoutFile();
 						
 						Platform.runLater(new Runnable() {
 							@Override
 							public void run() {
-								
 								if (!_isAdded) {
 									_listen.getStyleClass().add("button-function");
 									_submit.getStyleClass().add("button-menu");
@@ -177,7 +162,6 @@ public class QuizView {
 								_listen.getStyleClass().add("button-function");
 								
 								_isAdded = true;
-								
 							}
 						});
 					}
@@ -210,7 +194,7 @@ public class QuizView {
 			@Override
 			public void handle(ActionEvent event) {
 				Boolean confirmation;
-				confirmation = _cb2.displayBox("Skip Question", "   Are you sure you wish to skip this question? \n	You will not be given a mark for this question.   ");
+				confirmation = _cb2.displayBox("Skip Question", "Are you sure you wish to skip this question?\nYou will not be given a mark for this question.");
 				if (confirmation) {
 					FeedBackQuizView fbv = new FeedBackQuizView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _expression, true);
 					Taitai.changeScene(fbv.getFeedBackView(width, height));
@@ -218,7 +202,7 @@ public class QuizView {
 			}
 		});
 
-
+		//look and feel
 		toMenu.getStyleClass().add("button-back");
 		skipQuestion.getStyleClass().add("button-back");
 		_record.getStyleClass().add("button-function");
@@ -226,7 +210,6 @@ public class QuizView {
 		dynamicScore.getStyleClass().add("label-dynamicScore");
 		questionNumberLabel.getStyleClass().add("label-questionNumber");
 
-		//added extra labels, need to align them properly.
 		questionLayout.setAlignment(Pos.CENTER);
 		buttonsLayout.setAlignment(Pos.TOP_CENTER);
 		toMenuLayout.setAlignment(Pos.BOTTOM_RIGHT);
@@ -246,7 +229,5 @@ public class QuizView {
 		_quiz = new Scene(layout, width, height);
 		_quiz.getStylesheets().add("taitai/view/TaitaiTheme.css");
 		return _quiz;
-
 	}
-
 }

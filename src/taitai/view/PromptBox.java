@@ -35,7 +35,6 @@ public class PromptBox {
         });
 
         layout.getChildren().addAll(messageLabel, ok);
-        
         layout.setAlignment(Pos.CENTER);
         
         Scene scene = new Scene(layout);
@@ -44,10 +43,8 @@ public class PromptBox {
         _window.initModality(Modality.APPLICATION_MODAL);
         _window.setTitle(title);
         _window.setMinHeight(150);
-       // _window.setMinWidth(400);
         _window.setScene(scene);
         _window.centerOnScreen();
-        _window.showAndWait();
-        
+        _window.showAndWait();        
     }
 }

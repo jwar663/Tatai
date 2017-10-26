@@ -18,6 +18,7 @@ public class ConfirmBox {
 
     public static boolean displayBox(String title, String prompt) {
         
+    	//initialising objects
     	Label confirmation;
     	Button yes, no;
     	
@@ -33,6 +34,7 @@ public class ConfirmBox {
         layout = new VBox(10);
         buttonLayout = new HBox(15);
 
+        //action for buttons
         yes.setOnAction(e -> {
             _confirm = true;
             _window.close();

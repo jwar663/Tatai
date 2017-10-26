@@ -32,7 +32,7 @@ public class StatsView {
 		VBox listLevel1Layout, listLevel2Layout, listLevel3Layout, listLevel4Layout, listLevel5Layout, statisticsLayout;
 		HBox toMenuLayout, listsLayout;
 		
-
+		//read stats from all files if they arent empty
 		if (TaitaiModel.readStats("stats/.level1") != null) {
 			_stringLevel1 = TaitaiModel.readStats("stats/.level1");
 			_intLevel1 = TaitaiModel.convertStats(_stringLevel1);
@@ -54,20 +54,22 @@ public class StatsView {
 			_intLevel5 = TaitaiModel.convertStats(_stringLevel5);
 		}
 		
-
 		layout = new BorderPane();
 		clearStats = new Button("Clear Stats");
 		toMenu = new Button("Go Back to Menu");
+		
 		graphLevel1 = new Button("View Graph");
 		graphLevel2 = new Button("View Graph");
 		graphLevel3 = new Button("View Graph");
 		graphLevel4 = new Button("View Graph");
 		graphLevel5 = new Button("View Graph");
+		
 		_listLevel1 = new ListView<String>();
 		_listLevel2 = new ListView<String>();
 		_listLevel3 = new ListView<String>();
 		_listLevel4 = new ListView<String>();
 		_listLevel5 = new ListView<String>();
+		
 		level1Title = new Label("Numbers 1-99");
 		level2Title = new Label("Add and Sub");
 		level3Title = new Label("Mult and Div");
@@ -80,7 +82,8 @@ public class StatsView {
 		_listLevel3 = addArrayToList(_listLevel3, _stringLevel3);
 		_listLevel4 = addArrayToList(_listLevel4, _stringLevel4);
 		_listLevel5 = addArrayToList(_listLevel5, _stringLevel5);
-
+		
+		//functionality for menu button
 		toMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -89,6 +92,7 @@ public class StatsView {
 			}
 		});
 		
+		//functionality for all levels to have graphs pop-up when button is pressed
 		graphLevel1.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -110,10 +114,10 @@ public class StatsView {
 			}
 		});
 		
-		graphLevel3.setOnAction(new EventHandler<ActionEvent>() {
+		graphLevel4.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				_lcv.displayChart("Combination", _intLevel3);
+				_lcv.displayChart("Combination", _intLevel4);
 			}
 		});
 		
@@ -123,7 +127,8 @@ public class StatsView {
 				_lcv.displayChart("Custom", _intLevel5);
 			}
 		});
-
+		
+		//clears all stats after confirming
 		clearStats.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -136,7 +141,8 @@ public class StatsView {
 				}
 			}
 		});
-
+		
+		//look and feel
 		statisticsLayout = new VBox();
 		toMenuLayout = new HBox(20);
 		listLevel1Layout = new VBox(15);
@@ -145,12 +151,6 @@ public class StatsView {
 		listLevel4Layout = new VBox(15);
 		listLevel5Layout = new VBox(15);
 		listsLayout = new HBox(10);
-		
-//		_listLevel1.setMaxWidth(150);
-//		_listLevel2.setMaxWidth(150);
-//		_listLevel3.setMaxWidth(150);
-//		_listLevel4.setMaxWidth(150);
-//		_listLevel5.setMaxWidth(150);
 		
 		_listLevel1.setMaxHeight(300);
 		_listLevel2.setMaxHeight(300);
@@ -198,7 +198,7 @@ public class StatsView {
 		_stats.getStylesheets().add("taitai/view/TaitaiTheme.css");
 		return _stats;
 	}
-
+	// creates a list view out of the stats that are in a string array
 	private ListView<String> addArrayToList(ListView<String> list, String[] stats) {
 		if (stats != null) {
 			for (int i = 0; i < stats.length; i++) {
