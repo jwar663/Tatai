@@ -85,6 +85,13 @@
     -fx-pref-width: 200;
     -fx-pref-height: 40;
 }
+.button-graph{
+    -fx-background-color: #800000;
+    -fx-text-fill: #E1F5FE;
+    -fx-background-radius: 2;
+    -fx-pref-width: 200;
+    -fx-pref-height: 40;
+}
 .button-menuClick{
     -fx-background-color: linear-gradient(#311B92, #3949AB);
     -fx-text-fill: #E1F5FE;

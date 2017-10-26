@@ -68,11 +68,11 @@ public class StatsView {
 		_listLevel3 = new ListView<String>();
 		_listLevel4 = new ListView<String>();
 		_listLevel5 = new ListView<String>();
-		level1Title = new Label("Stats for numbers 1-99");
-		level2Title = new Label("Stats for Addition and Subtraction");
-		level3Title = new Label("Stats for Multiplication and Division");
-		level4Title = new Label("Stats for Combination");
-		level5Title = new Label("Stats for Custom");
+		level1Title = new Label("Numbers 1-99");
+		level2Title = new Label("Add and Sub");
+		level3Title = new Label("Mult and Div");
+		level4Title = new Label("Combination");
+		level5Title = new Label("Custom");
 		statistics = new Label("Statistics");
 
 		_listLevel1 = addArrayToList(_listLevel1, _stringLevel1);
@@ -145,15 +145,33 @@ public class StatsView {
 		listLevel4Layout = new VBox(15);
 		listLevel5Layout = new VBox(15);
 		listsLayout = new HBox(10);
+		
+//		_listLevel1.setMaxWidth(150);
+//		_listLevel2.setMaxWidth(150);
+//		_listLevel3.setMaxWidth(150);
+//		_listLevel4.setMaxWidth(150);
+//		_listLevel5.setMaxWidth(150);
+		
+		_listLevel1.setMaxHeight(300);
+		_listLevel2.setMaxHeight(300);
+		_listLevel3.setMaxHeight(300);
+		_listLevel4.setMaxHeight(300);
+		_listLevel5.setMaxHeight(300);
+		
+		level1Title.setAlignment(Pos.CENTER);
+		level2Title.setAlignment(Pos.CENTER);
+		level3Title.setAlignment(Pos.CENTER);
+		level4Title.setAlignment(Pos.CENTER);
+		level5Title.setAlignment(Pos.CENTER);
 
 		clearStats.getStyleClass().add("button-function");
 		toMenu.getStyleClass().add("button-back");
 		statistics.getStyleClass().add("label-stats");
-		graphLevel1.getStyleClass().add("button-function");
-		graphLevel2.getStyleClass().add("button-function");
-		graphLevel3.getStyleClass().add("button-function");
-		graphLevel4.getStyleClass().add("button-function");
-		graphLevel5.getStyleClass().add("button-function");
+		graphLevel1.getStyleClass().add("button-graph");
+		graphLevel2.getStyleClass().add("button-graph");
+		graphLevel3.getStyleClass().add("button-graph");
+		graphLevel4.getStyleClass().add("button-graph");
+		graphLevel5.getStyleClass().add("button-graph");
 
 		listsLayout.setAlignment(Pos.TOP_CENTER);
 		statisticsLayout.setAlignment(Pos.CENTER);

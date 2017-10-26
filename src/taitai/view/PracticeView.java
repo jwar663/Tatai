@@ -130,7 +130,7 @@ public class PracticeView {
 				@Override
 				public void handle(ActionEvent event) {
 					Boolean confirmation;
-					confirmation = _cb.displayBox("Skip Question", "   Are you sure you wish to skip this question?	\nYou will not be given a mark for this question.	");
+					confirmation = _cb.displayBox("Skip Question", "   Are you sure you wish to skip this question?	");
 					if (confirmation) {
 						PracticeView pv = new PracticeView(_questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
 						Taitai.changeScene(pv.getPracticeView(width, height));
