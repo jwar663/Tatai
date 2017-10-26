@@ -26,6 +26,11 @@
 	-fx-font-family: "Helvetica";
 	-fx-text-fill: #0277BD;
 }
+.label-custom{
+	-fx-font-size: 35.0pt;
+	-fx-font-family: "Helvetica";
+	-fx-text-fill: #0277BD;
+}
 .label-numCorrect{
 	-fx-font-size: 40.0pt;
 	-fx-font-family: "Helvetica";

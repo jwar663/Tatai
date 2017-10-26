@@ -450,9 +450,6 @@ public class TaitaiModel {
 				}
 				
 			}
-//			System.out.println(lineOut);
-//			System.out.println(lineErr);
-			
 			return AnswerOrError;
 		} catch(Exception e) {
 			e.printStackTrace();
