@@ -9,9 +9,6 @@ import javafx.scene.layout.*;
 import taitai.Taitai;
 import taitai.TaitaiModel;
 import javafx.scene.control.*;
-
-import java.util.concurrent.TimeUnit;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -28,8 +25,8 @@ public class PracticeView {
 	private boolean _clickedRecord, _correct, _isAdded;
 	private Button _record, _listen, _submit;
 	private String _wordSaid, _expression;
+	private ConfirmBox _cb = new ConfirmBox();
 	private Thread _backgroundThread;
-	private VBox _buttonsLayout = new VBox(20);
 
 	/*
 	 * constructor
@@ -51,39 +48,40 @@ public class PracticeView {
 		// setting up elements of gui
 		BorderPane layout;
 		Label question, questionNumberLabel, dynamicScore;
-		Button toMenu;
-		VBox questionLayout, toMenuLayout, counterLayout;
+		Button toMenu, skipQuestion;
+		VBox questionLayout, buttonsLayout;
+		HBox toMenuLayout;
 
 		layout = new BorderPane();
 		toMenu = new Button("Go Back to Menu");
+		skipQuestion = new Button("Skip Question");
 		_record = new Button("Record");
 		question = new Label(_expression + "");
 		questionNumberLabel = new Label("Question " + _questionNumber);
 		dynamicScore = new Label(_numCorrect + "/" + (_questionNumber - 1));
 
-		counterLayout = new VBox();
 		questionLayout = new VBox();
-		toMenuLayout = new VBox();
-
-
+		toMenuLayout = new HBox(10);
+		buttonsLayout = new VBox(20);
+		
 		_listen = new Button("Playback");
 		_submit = new Button("Submit Answer");
-
+		
 		// submit button submits question and displays next view
 		_submit.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (TaitaiModel.pronouncedCorrectlyBoolean(_wordSaid, TaitaiModel.getWordRequired(_expression))) {
-					_correct = true;
-					_numCorrect++;
-				} else {
-					_correct = false;
-				}
-				FeedBackPracticeView fbv = new FeedBackPracticeView(_questionNumber, _level, _numCorrect, _correct, _expression);
-				Taitai.changeScene(fbv.getFeedBackPracticeView(width, height));
+					if (TaitaiModel.pronouncedCorrectlyBoolean(_wordSaid, TaitaiModel.getWordRequired(_expression))) {
+						_correct = true;
+						_numCorrect++;
+					} else {
+						_correct = false;
+					}
+					FeedBackPracticeView fbv = new FeedBackPracticeView(_questionNumber, _level, _numCorrect, _correct, _expression);
+					Taitai.changeScene(fbv.getFeedBackPracticeView(width, height));
 			}
 		});
-
+		
 		// listen button event handler 
 		_listen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -131,7 +129,7 @@ public class PracticeView {
 			}
 		});
 
-
+		
 		// record button event handler, records and starts timer
 		_record.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -166,7 +164,7 @@ public class PracticeView {
 								if (!_isAdded) {
 									_listen.getStyleClass().add("button-function");
 									_submit.getStyleClass().add("button-menu");
-									_buttonsLayout.getChildren().addAll(_listen, _submit);
+									buttonsLayout.getChildren().addAll(_listen, _submit);
 								}
 								_record.setText("Record");
 								_record.setDisable(false);								
@@ -200,9 +198,23 @@ public class PracticeView {
 				Taitai.changeScene(sv.getMainMenuView(width, height));
 			}
 		});
+		
+		// skip question button
+			skipQuestion.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					Boolean confirmation;
+					confirmation = _cb.displayBox("Skip Question", "   Are you sure you wish to skip this question?	");
+					if (confirmation) {
+						PracticeView pv = new PracticeView(_questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
+						Taitai.changeScene(pv.getPracticeView(width, height));
+					}
+				}
+			});
 
 		// format
 		toMenu.getStyleClass().add("button-back");
+		skipQuestion.getStyleClass().add("button-back");
 		_record.getStyleClass().add("button-function");
 		question.getStyleClass().add("label-quiz");
 		dynamicScore.getStyleClass().add("label-dynamicScore");
@@ -210,34 +222,25 @@ public class PracticeView {
 
 		//added extra labels, need to align them properly.
 		questionLayout.setAlignment(Pos.CENTER);
-		_buttonsLayout.setAlignment(Pos.TOP_CENTER);
+		buttonsLayout.setAlignment(Pos.TOP_CENTER);
 		toMenuLayout.setAlignment(Pos.BOTTOM_RIGHT);
-		//counterLayout.setAlignment(Pos.TOP_LEFT);
-
-
-		_buttonsLayout.setPadding(new Insets(10, 0, 20, 0));
+		dynamicScore.setAlignment(Pos.CENTER_LEFT);
+		
+		buttonsLayout.setPadding(new Insets(10, 0, 20, 0));
 		toMenuLayout.setPadding(new Insets(0, 40, 40, 0));
 
-		//counterLayout.setSpacing(10);
-
-		_buttonsLayout.getChildren().add(_record);
+		buttonsLayout.getChildren().add(_record);
 		questionLayout.getChildren().add(question);
-		toMenuLayout.getChildren().add(toMenu);
-		//counterLayout.getChildren().addAll(questionNumberLabel, dynamicScore);
+		toMenuLayout.getChildren().addAll(questionNumberLabel, dynamicScore, skipQuestion, toMenu);
 
 		layout.setTop(questionLayout);
-		layout.setCenter(_buttonsLayout);
+		layout.setCenter(buttonsLayout);
 		layout.setBottom(toMenuLayout);
-		//layout.setLeft(counterLayout);
-
-
 
 		_practice = new Scene(layout, width, height);
 		_practice.getStylesheets().add("taitai/view/TaitaiTheme.css");
 		return _practice;
 
 	}
-
-
 
 }
