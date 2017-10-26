@@ -36,7 +36,7 @@ public class FeedBackQuizView {
 		_expression = expression;
 		_skippedQuestion = skippedQuestion;
 		
-		if (_questionNumber == 10) {
+		if (_questionNumber > 9) {
 			_last = true;
 		} else {
 			_last = false;
@@ -99,7 +99,7 @@ public class FeedBackQuizView {
 					@Override
 					public void handle(ActionEvent event) {
 						Boolean confirmation;
-						confirmation = _cb2.displayBox("Back to Menu", "   Are you sure you wish to skip this question? \n	You will not be given a mark for this question.   ");
+						confirmation = _cb2.displayBox("Back to Menu", "Are you sure you wish to skip this question?\nYou will not be given a mark for this question.");
 						if (confirmation) {
 							QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
 							Taitai.changeScene(qv.getQuizView(width, height));

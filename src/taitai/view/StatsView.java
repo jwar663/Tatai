@@ -21,6 +21,7 @@ public class StatsView {
 	private String[] _stringLevel1, _stringLevel2, _stringLevel3, _stringLevel4, _stringLevel5; // needs to get input of these 
 	private int[] _intLevel1, _intLevel2, _intLevel3, _intLevel4, _intLevel5;
 	private ConfirmBox _cb = new ConfirmBox();
+	private PromptBox _pb = new PromptBox();
 	private LineChartView _lcv = new LineChartView();
 	private ListView<String> _listLevel1, _listLevel2, _listLevel3, _listLevel4, _listLevel5;
 
@@ -96,35 +97,55 @@ public class StatsView {
 		graphLevel1.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				_lcv.displayChart("Numbers to 99", _intLevel1);
+				if (_intLevel1.length < 1) {
+					_pb.displayBox("Error", "There is no data to use for the graph");
+				} else {
+					_lcv.displayChart("Numbers to 99", _intLevel1);
+				}
 			}
 		});
 		
 		graphLevel2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				_lcv.displayChart("Addition and Subtraction", _intLevel2);
+				if (_intLevel2.length < 1) {
+					_pb.displayBox("Error", "There is no data to use for the graph");
+				} else {
+					_lcv.displayChart("Addition and Subtraction", _intLevel2);
+				}
 			}
 		});
 		
 		graphLevel3.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				_lcv.displayChart("Multiplication and Division", _intLevel3);
+				if (_intLevel3.length < 1) {
+					_pb.displayBox("Error", "There is no data to use for the graph");
+				} else {
+					_lcv.displayChart("Multiplication and Division", _intLevel3);
+				}
 			}
 		});
 		
 		graphLevel4.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				_lcv.displayChart("Combination", _intLevel4);
+				if (_intLevel4.length < 1) {
+					_pb.displayBox("Error", "There is no data to use for the graph");
+				} else {
+					_lcv.displayChart("Combination", _intLevel4);
+				}
 			}
 		});
 		
 		graphLevel5.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				_lcv.displayChart("Custom", _intLevel5);
+				if (_intLevel5.length < 1) {
+					_pb.displayBox("Error", "There is no data to use for the graph");
+				} else {
+					_lcv.displayChart("Custom", _intLevel5);
+				}
 			}
 		});
 		
