@@ -12,6 +12,8 @@ import taitai.TaitaiModel;
 import javafx.scene.control.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 
 /**
  * Quiz view Gui
@@ -24,8 +26,7 @@ public class QuizView {
 	private boolean _clickedRecord, _firstTry, _correct, _isAdded;
 	private Button _record, _listen, _submit;
 	private String _wordSaid, _expression;
-	private ConfirmBox _cb = new ConfirmBox();
-	private ConfirmBox _cb2 = new ConfirmBox();
+	private Thread _backgroundThread;
 
 	/*
 	 * constructor
@@ -48,12 +49,11 @@ public class QuizView {
 		// setting up elements of gui
 		BorderPane layout;
 		Label question, questionNumberLabel, dynamicScore;
-		Button toMenu, skipQuestion;
+		Button toMenu;
 		VBox questionLayout, toMenuLayout, buttonsLayout, counterLayout;
 
 		layout = new BorderPane();
 		toMenu = new Button("Go Back to Menu");
-		skipQuestion = new Button("Skip Question");
 		_record = new Button("Record");
 		question = new Label(_expression + "");
 		questionNumberLabel = new Label("Question " + _questionNumber);
@@ -61,7 +61,7 @@ public class QuizView {
 
 		counterLayout = new VBox();
 		questionLayout = new VBox();
-		toMenuLayout = new VBox(10);
+		toMenuLayout = new VBox();
 		buttonsLayout = new VBox(20);
 		
 		_listen = new Button("Playback");
@@ -77,7 +77,7 @@ public class QuizView {
 					} else {
 						_correct = false;
 					}
-					FeedBackQuizView fbv = new FeedBackQuizView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _expression, false);
+					FeedBackQuizView fbv = new FeedBackQuizView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _expression);
 					Taitai.changeScene(fbv.getFeedBackView(width, height));
 			}
 		});
@@ -86,9 +86,46 @@ public class QuizView {
 		_listen.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-					_listen.setText("Playing...");
-					TaitaiModel.playAudio();
-					_listen.setText("Playback");
+				_listen.setText("Playing...");
+				TaitaiModel.playAudio();
+				_listen.setText("Playback");
+				
+				_listen.setText("Playing...");
+				_listen.setDisable(true);
+				_listen.getStyleClass().remove("button-function");
+				_listen.getStyleClass().add("button-functionClick");
+				_record.setDisable(true);
+				_record.getStyleClass().remove("button-function");
+				_record.getStyleClass().add("button-functionClick");
+
+				Task backgroundTask = new Task<Void>() {
+
+					@Override
+					public void run() {
+						
+						TaitaiModel.playAudio();
+						
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								_record.setDisable(false);								
+								_record.getStyleClass().remove("button-functionClick");
+								_record.getStyleClass().add("button-function");
+								_listen.setText("Playback");
+								_listen.setDisable(false);
+								_listen.getStyleClass().remove("button-functionClick");
+								_listen.getStyleClass().add("button-function");
+							}
+						});
+					}
+					@Override
+					protected Void call() throws Exception {
+						return null;
+					}
+				};	
+				_backgroundThread = new Thread(backgroundTask);
+				_backgroundThread.setDaemon(true);
+				_backgroundThread.start();	
 			}
 		});
 
@@ -97,25 +134,59 @@ public class QuizView {
 		_record.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				_record.setText("Recording...");
-				if (_level == 1) {
-					TaitaiModel.recordAudio("3");
-				} else {
-					TaitaiModel.recordAudio("5");
-				}
-				_record.setText("Record");
-				TaitaiModel.writeToRecout();
-				_wordSaid = TaitaiModel.readRecoutFile();
-				// wanted to have threads here but its too difficult to implement without being able to run any code
-
-				if (!_isAdded) {
-					_listen.getStyleClass().add("button-function");
-					_submit.getStyleClass().add("button-menu");
-					buttonsLayout.getChildren().addAll(_listen, _submit);
-				}
 				
-				_isAdded = true;
-				_record.setText("Record");
+				_listen.setDisable(true);
+				_listen.getStyleClass().remove("button-function");
+				_listen.getStyleClass().add("button-functionClick");
+				_record.setText("Recording...");
+				_record.setDisable(true);
+				_record.getStyleClass().remove("button-function");
+				_record.getStyleClass().add("button-functionClick");
+
+				Task backgroundTask = new Task<Void>() {
+
+					@Override
+					public void run() {
+						
+						if (_level == 1) {
+							TaitaiModel.recordAudio("3");
+						} else {
+							TaitaiModel.recordAudio("5");
+						}
+
+						TaitaiModel.writeToRecout();
+						_wordSaid = TaitaiModel.readRecoutFile();
+						
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								
+								if (!_isAdded) {
+									_listen.getStyleClass().add("button-function");
+									_submit.getStyleClass().add("button-menu");
+									buttonsLayout.getChildren().addAll(_listen, _submit);
+								}
+								_record.setText("Record");
+								_record.setDisable(false);								
+								_record.getStyleClass().remove("button-functionClick");
+								_record.getStyleClass().add("button-function");
+								_listen.setDisable(false);
+								_listen.getStyleClass().remove("button-functionClick");
+								_listen.getStyleClass().add("button-function");
+								
+								_isAdded = true;
+								
+							}
+						});
+					}
+					@Override
+					protected Void call() throws Exception {
+						return null;
+					}
+				};	
+				_backgroundThread = new Thread(backgroundTask);
+				_backgroundThread.setDaemon(true);
+				_backgroundThread.start();	
 			}
 		});
 
@@ -123,32 +194,13 @@ public class QuizView {
 		toMenu.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Boolean confirmation;
-				confirmation = _cb.displayBox("Back to Menu", "   Are you sure you wish to return to the menu? \n	All of your progress will be lost.   ");
-				if (confirmation) {
-					MainMenuView sv = new MainMenuView();
-					Taitai.changeScene(sv.getMainMenuView(width, height));
-				}
+				MainMenuView sv = new MainMenuView();
+				Taitai.changeScene(sv.getMainMenuView(width, height));
 			}
 		});
-		
-		// skip question button
-		skipQuestion.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				Boolean confirmation;
-				confirmation = _cb2.displayBox("Skip Question", "   Are you sure you wish to skip this question? \n	You will not be given a mark for this question.   ");
-				if (confirmation) {
-					FeedBackQuizView fbv = new FeedBackQuizView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _expression, true);
-					Taitai.changeScene(fbv.getFeedBackView(width, height));
-				}
-			}
-		});
-
 
 		// format
 		toMenu.getStyleClass().add("button-back");
-		skipQuestion.getStyleClass().add("button-back");
 		_record.getStyleClass().add("button-function");
 		question.getStyleClass().add("label-quiz");
 		dynamicScore.getStyleClass().add("label-dynamicScore");
@@ -168,7 +220,7 @@ public class QuizView {
 
 		buttonsLayout.getChildren().add(_record);
 		questionLayout.getChildren().add(question);
-		toMenuLayout.getChildren().addAll(skipQuestion, toMenu);
+		toMenuLayout.getChildren().add(toMenu);
 		//counterLayout.getChildren().addAll(questionNumberLabel, dynamicScore);
 
 		layout.setTop(questionLayout);
