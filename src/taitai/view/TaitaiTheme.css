@@ -79,10 +79,10 @@
     -fx-pref-height: 40;
 }
 .button-function{
-    -fx-background-color: linear-gradient(#311B92, #3949AB);
+    -fx-background-color: linear-gradient(#BDBDBD, #9E9E9E);
     -fx-text-fill: #E1F5FE;
     -fx-background-radius: 2;
-    -fx-pref-width: 300;
+    -fx-pref-width: 200;
     -fx-pref-height: 40;
 }
 .button-menuClick{
@@ -92,6 +92,7 @@
     -fx-background-radius: 2;
     -fx-pref-width: 400;
     -fx-pref-height: 60;
+
 }
 .button-backClick{
 	-fx-background-color: #F44336;
@@ -109,7 +110,8 @@
 .button-functionClick{
     -fx-background-color: linear-gradient(#BDBDBD, #9E9E9E);
     -fx-text-fill: #E1F5FE;
+    -fx-font-size: 20.0pt;
     -fx-background-radius: 2;
-    -fx-pref-width: 300;
-    -fx-pref-height: 40;
+    -fx-pref-width: 400;
+    -fx-pref-height: 60;
 }

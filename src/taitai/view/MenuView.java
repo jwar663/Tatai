@@ -15,7 +15,7 @@ import javafx.scene.text.*;
 
 /** 
  * Menu GUI
- * @author Matthew Taylor
+ * @author Matthew Taylor, Jaedyn Ward
  */
 public class MenuView {
 	
@@ -61,18 +61,18 @@ public class MenuView {
 		toMenu.getStyleClass().add("button-back");
 		
 		// button event goes to level 2 quiz
-				_level1.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						if(_mode == 1) {
-							PracticeView qv = new PracticeView(1, 1, 0, TaitaiModel.startTest(1));
-							Taitai.changeScene(qv.getPracticeView(width, height));
-						} else {
-							QuizView qv = new QuizView(true, 1, 1, 0, TaitaiModel.startTest(1));
-							Taitai.changeScene(qv.getQuizView(width, height));
-						}
+			_level1.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					if(_mode == 1) {
+						PracticeView qv = new PracticeView(1, 1, 0, TaitaiModel.startTest(1));
+						Taitai.changeScene(qv.getPracticeView(width, height));
+					} else {
+						QuizView qv = new QuizView(true, 1, 1, 0, TaitaiModel.startTest(1));
+						Taitai.changeScene(qv.getQuizView(width, height));
 					}
-				});
+				}
+			});
 		// button event goes to level 2 quiz
 		_level2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

@@ -18,7 +18,7 @@ import javafx.scene.control.*;
 public class FeedBackQuizView {
 
 	private Scene _feedback;
-	private boolean _firstTry, _correct, _last;
+	private boolean _firstTry, _correct, _last, _skippedQuestion;
 	int _questionNumber, _width, _height, _level, _numCorrect;
 	String _incorrect, _expression;
 	private ConfirmBox _cb = new ConfirmBox();
@@ -27,13 +27,14 @@ public class FeedBackQuizView {
 	/*
 	 * constructor
 	 */
-	public FeedBackQuizView(boolean firstTry, int questionNumber, int level, int numCorrect, boolean correct, String expression) {
+	public FeedBackQuizView(boolean firstTry, int questionNumber, int level, int numCorrect, boolean correct, String expression, boolean skippedQuestion) {
 		_correct = correct; 
 		_firstTry = firstTry; 
 		_questionNumber = questionNumber;
 		_level = level;
 		_numCorrect = numCorrect;
 		_expression = expression;
+		_skippedQuestion = skippedQuestion;
 		
 		if (_questionNumber == 10) {
 			_last = true;
@@ -65,54 +66,63 @@ public class FeedBackQuizView {
 		}
 		
 		// logic for correct message and text alignment
-		if (_correct && !_last) {
-			feedback = new Label("Correct!");
+		if (_skippedQuestion) {
+			feedback = new Label("You skipped the question, you received no marks.");
 			toQuestion = new Button("Next Question");
-			feedback.setWrapText(true);
-			feedback.setTextAlignment(TextAlignment.CENTER);
-			feedback.getStyleClass().add("label-correct");
-		} else if (_firstTry && !_correct) {
-			
-			feedback = new Label("Try Again, you said " + _incorrect + ".");
-			toQuestion = new Button("Retry");
-			feedback.setWrapText(true);
-			feedback.setTextAlignment(TextAlignment.CENTER);
-			feedback.getStyleClass().add("label-tryAgain");
-			skipQuestion.getStyleClass().add("button-back");
-			
-			// skip question button
-			skipQuestion.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event) {
-					Boolean confirmation;
-					confirmation = _cb2.displayBox("Back to Menu", "   Are you sure you wish to skip this question? \n	You will not be given a mark for this question.   ");
-					if (confirmation) {
-						QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
-						Taitai.changeScene(qv.getQuizView(width, height));
-						}
-					}
-				});
-						
-			toMenuLayout.getChildren().add(skipQuestion);
-		} else if (_last && _correct) {
-			feedback = new Label("Correct!");
-			toQuestion = new Button("Finish Quiz");
-			feedback.setWrapText(true);
-			feedback.setTextAlignment(TextAlignment.CENTER);
-			feedback.getStyleClass().add("label-correct");
-		} else if (_last && !_correct) {
-			feedback = new Label("Incorrect, you said " + _incorrect + ".");
-			toQuestion = new Button("Finish Quiz");
 			feedback.setWrapText(true);
 			feedback.setTextAlignment(TextAlignment.CENTER);
 			feedback.getStyleClass().add("label-incorrect");
 		} else {
-			feedback = new Label("Incorrect, you said " + _incorrect + ".");
-			toQuestion = new Button("Next Question");
-			feedback.setWrapText(true);
-			feedback.setTextAlignment(TextAlignment.CENTER);
-			feedback.getStyleClass().add("label-incorrect");
-		}	
+			if (_correct && !_last) {
+				feedback = new Label("Correct!");
+				toQuestion = new Button("Next Question");
+				feedback.setWrapText(true);
+				feedback.setTextAlignment(TextAlignment.CENTER);
+				feedback.getStyleClass().add("label-correct");
+			} else if (_firstTry && !_correct) {
+				
+				feedback = new Label("Try Again, you said " + _incorrect + ".");
+				toQuestion = new Button("Retry");
+				feedback.setWrapText(true);
+				feedback.setTextAlignment(TextAlignment.CENTER);
+				feedback.getStyleClass().add("label-tryAgain");
+				skipQuestion.getStyleClass().add("button-back");
+				
+				// skip question button
+				skipQuestion.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						Boolean confirmation;
+						confirmation = _cb2.displayBox("Back to Menu", "   Are you sure you wish to skip this question? \n	You will not be given a mark for this question.   ");
+						if (confirmation) {
+							QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
+							Taitai.changeScene(qv.getQuizView(width, height));
+							}
+						}
+					});
+							
+				toMenuLayout.getChildren().add(skipQuestion);
+			} else if (_last && _correct) {
+				feedback = new Label("Correct!");
+				toQuestion = new Button("Finish Quiz");
+				feedback.setWrapText(true);
+				feedback.setTextAlignment(TextAlignment.CENTER);
+				feedback.getStyleClass().add("label-correct");
+			} else if (_last && !_correct) {
+				feedback = new Label("Incorrect, you said " + _incorrect + ".");
+				toQuestion = new Button("Finish Quiz");
+				feedback.setWrapText(true);
+				feedback.setTextAlignment(TextAlignment.CENTER);
+				feedback.getStyleClass().add("label-incorrect");
+			} else {
+				feedback = new Label("Incorrect, you said " + _incorrect + ".");
+				toQuestion = new Button("Next Question");
+				feedback.setWrapText(true);
+				feedback.setTextAlignment(TextAlignment.CENTER);
+				feedback.getStyleClass().add("label-incorrect");
+			}
+		}
+			
 		
 		layout = new BorderPane();
 		toMenu = new Button("Go Back to Menu");
@@ -121,7 +131,10 @@ public class FeedBackQuizView {
 		toQuestion.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) { // make questions asked appropriate
-				if (_correct && !_last) {
+				if (_skippedQuestion && !_last) {
+					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
+					Taitai.changeScene(qv.getQuizView(_width, _height));
+				} else if (_correct && !_last) {
 					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
 					Taitai.changeScene(qv.getQuizView(_width, _height));
 				} else if (_firstTry && !_correct) {

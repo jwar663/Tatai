@@ -77,7 +77,7 @@ public class QuizView {
 					} else {
 						_correct = false;
 					}
-					FeedBackQuizView fbv = new FeedBackQuizView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _expression);
+					FeedBackQuizView fbv = new FeedBackQuizView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _expression, false);
 					Taitai.changeScene(fbv.getFeedBackView(width, height));
 			}
 		});
@@ -137,10 +137,10 @@ public class QuizView {
 			@Override
 			public void handle(ActionEvent event) {
 				Boolean confirmation;
-				confirmation = _cb2.displayBox("Back to Menu", "   Are you sure you wish to skip this question? \n	You will not be given a mark for this question.   ");
+				confirmation = _cb2.displayBox("Skip Question", "   Are you sure you wish to skip this question? \n	You will not be given a mark for this question.   ");
 				if (confirmation) {
-					QuizView qv = new QuizView(true,  _questionNumber + 1, _level, _numCorrect, TaitaiModel.startTest(_level));
-					Taitai.changeScene(qv.getQuizView(width, height));
+					FeedBackQuizView fbv = new FeedBackQuizView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _expression, true);
+					Taitai.changeScene(fbv.getFeedBackView(width, height));
 				}
 			}
 		});

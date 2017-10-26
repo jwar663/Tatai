@@ -49,6 +49,15 @@ public class TaitaiModel {
 			f.printStackTrace();
 		}
 	}
+	//convert a string array to an integer array
+	public static int[] convertStats(String stats[]) {
+		int[] statsInt = new int[stats.length];
+		for (int i = 0; i < stats.length; i++) {
+			statsInt[i] = Integer.parseInt(stats[i]);
+		}
+		return statsInt;
+	}
+	
 	
 	//reads the stats from files to label in the stats window
 	public static String[] readStats(String file) {
@@ -508,10 +517,9 @@ public class TaitaiModel {
 		createFile(" >> stats/.level2");
 		createFile("mkdir questions");
 		createFile(" >> questions/.custom");
-//		createFile(" >> questions/.numbers");
-//		createFile(" >> questions/.addition_subtraction");
-//		createFile(" >> questions/.multiplication_division");
-//		createFile(" >> questions/.combination");
+		createFile(" >> stats/.level3");
+		createFile(" >> stats/.level4");
+		createFile(" >> stats/.level5");
 	}
 }
 
