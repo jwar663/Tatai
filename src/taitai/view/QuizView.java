@@ -77,7 +77,7 @@ public class QuizView {
 					} else {
 						_correct = false;
 					}
-					FeedBackQuizView fbv = new FeedBackQuizView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _expression);
+					FeedBackQuizView fbv = new FeedBackQuizView(_firstTry, _questionNumber, _level, _numCorrect, _correct, _expression, false);
 					Taitai.changeScene(fbv.getFeedBackView(width, height));
 			}
 		});
